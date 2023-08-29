@@ -9,7 +9,7 @@ Sovelluksen avulla käyttäjä voi selata tapahtumia sään, paikan ja ajankohda
 Projektin toteutuksessa käytettävät toteutusteknologiat: 
 - Spring Boot
 - Java
-- H2-tietokanta, myöhemmässä vaiheessa toinen sopivaksi näkemämme tietokanta.
+- H2-tietokanta, myöhemmässä vaiheessa toinen sopivaksi näkemämme tietokanta (MySQL / MariaDB).
 -  Thymeleaf, myöhemmässä vaiheessa React.
 
 Ryhmän jäsenet:
