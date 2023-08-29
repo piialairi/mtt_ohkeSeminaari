@@ -1,23 +1,21 @@
-# mtt-backend
+# "Mitä tänään tehtäisiin?"
 
-Projektin nimi.
+#### Projektin "Mitä tänään tehtäisiin?" alustava kuvaus
 
-####  "Mitä tänään tehtäisiin?"
-Mikä on toteuttavan sovelluksen tarkoitus?
+Projektin tarkoitus on luoda sovelluksen, jonka avulla käyttäjä voisi löytää sääolosuhteisiin sopivaa tekemistä haluamalleen ajankohdalle.
 
-#### Sovelluksen tarkoitus on auttaa käyttäjää löytää tekemistä haluamalleen ajankohdalle.
-Mitkä ovat sovelluksen tärkeimmät ominaisuudet, eli mitä sovelluksen käyttäjä voi sillä tehdä?
+Sovelluksen avulla käyttäjä voi selata tapahtumia sään, paikan ja ajankohdan perusteella. Käyttäjä voi myös luoda, muokata ja poistaa tapahtumia.
 
-#### Sovelluksen avulla käyttäjä voi selata, lisätä, muokata ja poistaa tapahtumia sään, paikan, ajankohdan perusteella.
-Mitä toteutusteknologioita (esim. ohjelmointikieltä, tai sovelluskehystä kuten Spring Boot, tai Django) projektin toteutuksessa tullaan käyttämään. Tässä on tärkeää, että jos esimerkiksi Palvelinohjelmointi eli nykyiseltä nimeltään Back end-ohjelmointi ei ole arvosanaa 5, niin tilanne ei parane vaihtamalla tekniikkastäkkiä.
+Projektin toteutuksessa käytettävät toteutusteknologiat: 
+- Spring Boot
+- Java
+- H2-tietokanta, myöhemmässä vaiheessa MariaDB
+-  Thymeleaf, myöhemmässä vaiheessa React.
 
-#### Springboot, Java, H2-tietokanta, Thymeleaf (myöhemmässä vaiheessa React ja MariaDB)
-
-Ryhmän jäsenten nimet:
-
-- Piia Lairi
+Ryhmän jäsenet:
+- Lairi Piia
 - Martinonyte Dovile
 - Muittari Samuel
 - Myllymäki Aliisa
 - Rautiainen Aleksis
-- Rusi Romeoo
+- Rusi Romeo
