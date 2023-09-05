@@ -19,3 +19,5 @@ Ryhmän jäsenet:
 - Myllymäki Aliisa
 - Rautiainen Aleksis
 - Rusi Romeo
+
+Dovile
