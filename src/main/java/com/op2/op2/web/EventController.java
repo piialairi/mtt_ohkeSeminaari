@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,5 +26,26 @@ public class EventController {
         List<Event> events = (List<Event>) eventRepository.findAll();
         model.addAttribute("events", events);
         return "eventlist";
+    }
+
+    //Add event
+    @GetMapping("/addEvent")
+    public String addEvent(Model model) {
+        model.addAttribute("newevent", new Event());
+        return "addevent";
+    }
+
+    //Edit event
+    @GetMapping("/editEvent/{id}")
+    public String editEvent(@PathVariable("id") Long eventId, Model model) {
+        model.addAttribute("editEvent", eventRepository.findById(eventId));
+        return "editevent";
+    }
+    
+    //Save event
+    @PostMapping("/saveEvent")
+    public String saveEvent(Event event) {
+        eventRepository.save(event);
+        return "redirect:eventlist";
     }
 }
