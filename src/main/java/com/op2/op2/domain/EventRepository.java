@@ -1,0 +1,13 @@
+package com.op2.op2.domain;
+
+import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+
+
+public interface EventRepository extends CrudRepository<Event, Long> {
+    
+    List<Event> findByEventName(String eventName);
+
+    Event findByEventId(long eventId);
+
+}
