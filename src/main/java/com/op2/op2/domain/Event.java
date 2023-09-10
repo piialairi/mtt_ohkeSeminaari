@@ -1,5 +1,9 @@
 package com.op2.op2.domain;
 
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +16,8 @@ public class Event {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long eventId;
     private String eventName;
-    private String date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
     private String description;
     private double price;
 
@@ -20,7 +25,7 @@ public class Event {
 
     }
 
-    public Event(String eventName, String date, String description, double price) {
+    public Event(String eventName, LocalDate date, String description, double price) {
         super();
         this.eventName = eventName;
         this.date = date;
@@ -44,11 +49,11 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
