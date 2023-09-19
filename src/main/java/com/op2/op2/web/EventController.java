@@ -21,7 +21,7 @@ public class EventController {
     private EventRepository eventRepository;
 
     // List all Events
-    @RequestMapping(value = "/eventlist", method = RequestMethod.GET)
+    @RequestMapping(path = "/eventlist", method = RequestMethod.GET)
     public String eventList(Model model) {
         List<Event> events = (List<Event>) eventRepository.findAll();
         model.addAttribute("events", events);
