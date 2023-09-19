@@ -22,8 +22,10 @@ public class RepositoryTests {
 
     @Test
     public void findByEventNameShouldReturnListSize() {
-        List<Event> eventsByName = eventRepository.findByEventName("Bloodred Hourglass");
-        assertEquals(eventsByName.size(), 1, 1); //(Assert that expected and actual are equal within the given non-negative delta.)
+        Event event = new Event("Some test event name2", LocalDate.now(), "test description", 100);
+        eventRepository.save(event);
+        List<Event> eventsByName = eventRepository.findByEventName("Some test event name2");
+        assertEquals(eventsByName.size(), 1); //(Assert that expected and actual are equal within the given non-negative delta.)
     }
 
     @Test
@@ -45,11 +47,21 @@ public class RepositoryTests {
     public void updateEventName() {
         Event event = new Event("Some test event name", LocalDate.now(), "test description", 100);
         eventRepository.save(event);
-        Optional<Event> eventbyid = eventRepository.findById((long) 1);
+        Optional<Event> eventbyid = eventRepository.findById((long) event.getEventId());
         assertNotEquals(eventbyid.get().getEventId(), null);
         eventbyid.get().setEventName("Changed event name");
         List<Event> events = eventRepository.findByEventName("Changed event name");
         assertThat(events).hasSize(1);
     }
-
+    @Test
+    public void deleteEvent() {
+        Event newevent = new Event("Test event name", LocalDate.now(), "test description", 100);
+        eventRepository.save(newevent);
+        Event newevents = eventRepository.findByEventId(newevent.getEventId());
+    //    assertNotEquals(event.getEventId(), null);
+        newevents.setEventName("Event to delete");
+        newevents.setEventName(null);
+        List<Event> listnewevent = eventRepository.findByEventName("Event to delete");
+        assertThat(listnewevent).hasSize(0);
+    }
 }
