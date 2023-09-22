@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.op2.op2.domain.Event;
 import com.op2.op2.domain.EventRepository;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class EventController {
@@ -48,4 +50,11 @@ public class EventController {
         eventRepository.save(event);
         return "redirect:eventlist";
     }
+
+    @RequestMapping(value="/delete/{eventId}", method=RequestMethod.GET)
+    public String deleteEvent(@PathVariable("eventId") Long eventId)  {
+        eventRepository.deleteById(eventId);
+        return "redirect:/eventlist";
+    }
+    
 }
