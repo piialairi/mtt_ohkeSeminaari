@@ -10,14 +10,19 @@ import org.springframework.context.annotation.Bean;
 
 import com.op2.op2.domain.Event;
 import com.op2.op2.domain.EventRepository;
+import com.op2.op2.domain.Location;
+import com.op2.op2.domain.LocationRepository;
 
 @SpringBootApplication
 public class EventApplication {
     private static final Logger log = LoggerFactory.getLogger(EventApplication.class);
 
     @Bean
-    public CommandLineRunner demoData(EventRepository eventRepository) {
+    public CommandLineRunner demoData(EventRepository eventRepository, LocationRepository locationRepository) {
         return (args) -> {
+            locationRepository.save(new Location("00100", "Helsinki"));
+            locationRepository.save(new Location("00120", "Helsinki"));
+            locationRepository.save(new Location("00150", "Helsinki"));
 
             eventRepository.save(new Event("Bloodred Hourglass", LocalDate.of(2023, 10, 21),
                     "Livemusiikki Vanhalla Ylioppilastalolla klo 19 alkaen.", 29));
