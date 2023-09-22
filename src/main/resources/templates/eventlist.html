@@ -23,7 +23,7 @@
                     <th>Price</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="eventTableBody">
                 <tr th:each="event : ${events}">
                     <td th:text="${event.eventId}"></td>
                     <td th:text="${event.eventName}"></td>
@@ -47,6 +47,29 @@
         </table>
         <a href="/addEvent" class="btn btn-primary" style="margin: 10px;">Add event</a>
     </div>
+    <div class="form-group">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by Event Name">
+        <button id="searchButton" class="btn btn-primary" style="margin: 10px;">Search</button>
+    </div>
+    
 </body>
+<script>
+    document.getElementById("searchButton").addEventListener("click", function () {
+        var searchTerm = document.getElementById("searchInput").value.toLowerCase();
+        var tableBody = document.getElementById("eventTableBody");
+        var eventRows = tableBody.getElementsByTagName("tr");
 
+        for (var i = 0; i < eventRows.length; i++) {
+            var eventNameCell = eventRows[i].getElementsByTagName("td")[1];
+            if (eventNameCell) {
+                var eventName = eventNameCell.textContent.toLowerCase();
+                if (eventName.includes(searchTerm)) {
+                    eventRows[i].style.display = "";
+                } else {
+                    eventRows[i].style.display = "none";
+                }
+            }
+        }
+    });
+</script>
 </html>
