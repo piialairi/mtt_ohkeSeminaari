@@ -1,30 +1,10 @@
 # "Mitä tänään tehtäisiin?"
 
-#### Projektin "Mitä tänään tehtäisiin?" alustava kuvaus
-
-Projektin tarkoitus on luoda sovellus, jonka avulla käyttäjä voisi löytää sääolosuhteisiin sopivaa tekemistä haluamalleen ajankohdalle.
-
-Sovelluksen avulla käyttäjä voi selata tapahtumia sään, paikan ja ajankohdan perusteella. Käyttäjä voi myös luoda, muokata ja poistaa luomiaan tapahtumia.
-
-Projektin toteutuksessa käytettävät toteutusteknologiat: 
--  Spring Boot
--  Java
--  JavaScript
--  H2-tietokanta alussa testidatan käsittelyyn, myöhemmässä vaiheessa MySQL.
--  Thymeleaf, myöhemmässä vaiheessa React.
--  Hyödynnämme avointa dataa muun muassa säätietojen, tapahtumien ja paikkojen hakemiseen. 
-
-Ryhmän jäsenet:
-- Lairi Piia
-- Martinonyte Dovile
-- Muittari Samuel
-- Myllymäki Aliisa
-- Rautiainen Aleksis
-- Rusi Romeo
+Tiimi: Lairi Piia, Martinonyte Dovile, Muittari Samuel, Myllymäki Aliisa, Rautiainen Aleksis, Rusi Romeo
 
 ## Johdanto
 
-Johdantoon kirjoitetaan lyhyt, ytimekäs kuvaus siitä, mikä on projektin aihe,
+<!-- Johdantoon kirjoitetaan lyhyt, ytimekäs kuvaus siitä, mikä on projektin aihe,
 kuka on asiakas (käyttäjä), mitä hän haluaa ja saa järjestelmältä, mitä
 tekniikoita käytetään ja mitä konkreettisesti on valmiina, kun projekti päättyy.
 
@@ -33,12 +13,31 @@ tekniikoita käytetään ja mitä konkreettisesti on valmiina, kun projekti pä�
     -   Palvelinpuolen ratkaisut ja teknologiat (esim. palvelinteknologia, mikä tietokantajärjestelmä on käytössä)
     -   Käyttöliittymäratkaisut ja teknologiat (esim. päätelaitteet: puhelin,
     täppäri, desktop)
+    -->
+
+Projektin tarkoitus on luoda houkuttelevaa tekemistä ja ajanvietettä tarjoava sovellus. Sen avulla käyttäjä voisi löytää monenlaista sääolosuhteisiin sopivaa tekemistä haluamalleen ajankohdalle.
+Sovelluksen nimi on "Mitä tänään tehtäisiin?".
+
+Sovellusta voivat hyödyntää sekä yksityishenkilöt, että tapahtuma- ja vapaa-ajantoiminnan järjestäjät.
+Tapahtumien luonti on helppoa ja palvelun avulla toimijat voivat mahdollisesti tavoittaa tavallista suuremman kävijämäärän.
+
+Sovelluksen avulla käyttäjä voi selata tapahtumia sään, paikan ja ajankohdan perusteella. Hyödyntäen omaa sijaintia käyttäjä voi hakea lähellä olevia tapahtumia. Rekisteröity käyttäjä voi luoda, muokata ja poistaa luomiaan tapahtumia. Järjestelmävalvojalla on oikeus hallinnoida kaikki tapahtumailmoitukset.
+
+Käyttäjien lisäämien tapahtumien lisäksi sovellukseen haetaan tapahtumia myös avointa dataa käyttäen. Helpottaakseen tapahtumahakua ja parempaa käyttäjäkokemusta ajattelen, tapahtumia luokitellaan kategorioihin. Kategoriat voisivat olla: musiikki, teatteri, näyttelyt, urheilu, harrastukset, ulkoilu, muu.
+
+#### Projektin toteutuksessa käytettävät teknologiat: 
+- Spring Boot Java-pohjainen sovelluskehys 
+- H2-tietokanta alussa testidatan käsittelyyn, myöhemmässä vaiheessa MySQL.
+- Käyttöliittymän toteutus alussa Thymeleaf:llä ja JavaScript:lla, myöhemmässä vaiheessa React-kirjastoa käyttäen.
+- Hyödynnämme avointa dataa muun muassa säätietojen, tapahtumien ja paikkojen hakemiseen.
+- Päätelaitteet sovelluksen käyttöön: tietokone, tabletti, älypuhelin
 
 ## Järjestelmän määrittely
 
-Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän
+<!--Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän
 toiminnot hahmotellaan käyttötapausten tai käyttäjätarinoiden kautta, ja kuvataan järjestelmän
 käyttäjäryhmät.
+-->
 
 **Käyttäjäryhmät**
 
@@ -61,7 +60,7 @@ Järjestelmänvalvoja:
 -->
 **käyttäjätarinat**
 - Käyttäjä pystyy valitsemaan oman sijaintinsa. 
-- kirjautunut käyttäjä voi lisätä tapahtuman. 
+- Kirjautunut käyttäjä voi lisätä tapahtuman. 
 - Käyttäjä pystyy poistamaan lisäämänsä tapahtuman. 
 - Käyttäjä voi muokata lisäämäänsä tapahtuman. 
 - Käyttäjä voi kirjautumatta hakea/selata säätä.
@@ -96,12 +95,14 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 ### Tietokannan kaaviot
 
 **Relaatiokaavio**
+
 <img width="352" alt="relaatiokaavio v1" src="https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/assets/112238330/50555825-ec31-4d8f-a15f-4171def54232">
 
-<!-- ![TietokantaV1](https://cdn.discordapp.com/attachments/1143485239105171548/1149753145711399114/relaatiokaavio_v1.png) -->
-![TietokantaV2] (https://cdn.discordapp.com/attachments/1143485239105171548/1151100918528483359/image.png)
+<!-- ![TietokantaV1](https://cdn.discordapp.com/attachments/1143485239105171548/1149753145711399114/relaatiokaavio_v1.png) 
+![TietokantaV2](https://cdn.discordapp.com/attachments/1143485239105171548/1151100918528483359/image.png)-->
 
 **Javakaavio**
+
 <img width="643" alt="javakaavio v1" src="https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/assets/112238330/1f4f1a38-cef2-4b21-abfe-7f8cf1828beb">
 
 
@@ -167,13 +168,22 @@ Tämän lisäksi
     vältytään
 -->
 ## Testaus
-
+<!--
 Tässä kohdin selvitetään, miten ohjelmiston oikea toiminta varmistetaan
 testaamalla projektin aikana: millaisia testauksia tehdään ja missä vaiheessa.
 Testauksen tarkemmat sisällöt ja testisuoritusten tulosten raportit kirjataan
 erillisiin dokumentteihin.
 
 Tänne kirjataan myös lopuksi järjestelmän tunnetut ongelmat, joita ei ole korjattu.
+-->
+Projektin aikana sovelluksen oikea toiminta varmistetaan testaamalla koodin toiminnallisuuksia jokaisessa kehitysvaiheessa. Jokainen tiimin jäsen tehtyään muutoksia koodiin testaa paikallisesti koodin toimivuuden ennen jakamista yhteiseen projektiin.
+
+Projektin testitapauksia luodaan mahdollisimman varhaisessa vaiheessa, muokataan tarpeen mukaan ja dokumentoidaan. 
+
+Testatut osat:
+* [Sovelluksen käynnistys](https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/blob/develop/src/test/java/com/op2/op2/Op2ApplicationTests.java) <!--[Sovelluksen käynnistys](./src/test/java/com/op2/op2/Op2ApplicationTests.java)-->
+* [EventRepository CRUD metodit](https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/blob/develop/src/test/java/com/op2/op2/RepositoryTests.java) <!--[EventRepository CRUD metodit](./src/test/java/com/op2/op2/RepositoryTests.java)-->
+
 <!--
 ## Asennustiedot
 
