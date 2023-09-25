@@ -23,6 +23,7 @@ public class EventApplication {
             locationRepository.save(new Location("00100", "Helsinki"));
             locationRepository.save(new Location("00120", "Helsinki"));
             locationRepository.save(new Location("00150", "Helsinki"));
+            locationRepository.save(new Location("01400", "Vantaa"));
 
             eventRepository.save(new Event("Bloodred Hourglass", LocalDate.of(2023, 10, 21),
                     "Livemusiikki Vanhalla Ylioppilastalolla klo 19 alkaen.", 29));
