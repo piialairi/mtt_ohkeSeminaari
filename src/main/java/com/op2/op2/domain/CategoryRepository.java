@@ -8,6 +8,6 @@ public interface CategoryRepository extends CrudRepository<Category, String> {
     
     List<Category> findByCategoryName(String categoryName);
 
-    Category findByCategoryId(String categoryName);
+    //Category findByCategoryId(String categoryName);
 
 }
