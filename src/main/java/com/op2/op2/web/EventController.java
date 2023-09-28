@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.op2.op2.domain.Event;
 import com.op2.op2.domain.EventRepository;
 // import org.springframework.web.bind.annotation.RequestParam;
+import com.op2.op2.domain.LocationRepository;
 
 
 @Controller
@@ -21,6 +22,8 @@ public class EventController {
     
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private LocationRepository locationRepository;
 
     // List all Events
     @RequestMapping(path = "/eventlist", method = RequestMethod.GET)
@@ -34,6 +37,7 @@ public class EventController {
     @GetMapping("/addEvent")
     public String addEvent(Model model) {
         model.addAttribute("newevent", new Event());
+        model.addAttribute("locations", locationRepository.findAll());
         return "addevent";
     }
 
@@ -41,6 +45,7 @@ public class EventController {
     @GetMapping("/editEvent/{id}")
     public String editEvent(@PathVariable("id") Long eventId, Model model) {
         model.addAttribute("editEvent", eventRepository.findById(eventId));
+        model.addAttribute("locations", locationRepository.findAll());
         return "editevent";
     }
     

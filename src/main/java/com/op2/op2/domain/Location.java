@@ -1,9 +1,12 @@
 package com.op2.op2.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Location {
@@ -12,6 +15,9 @@ public class Location {
     private Long locationId;
     private String zipcode;
     private String city;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
+    private List<Event> events;
 
     public Location() {
 
@@ -38,8 +44,17 @@ public class Location {
     public String getCity() {
         return city;
     }
+
     public void setCity(String city) {
         this.city = city;
+    }
+    
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override
