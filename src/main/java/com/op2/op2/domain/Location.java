@@ -8,15 +8,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Location {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long locationId;
     private String zipcode;
     private String city;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
+    @JsonIgnore
     private List<Event> events;
 
     public Location() {
@@ -32,15 +35,19 @@ public class Location {
     public Long getLocationId() {
         return locationId;
     }
+
     public void setLocationId(Long locationId) {
         this.locationId = locationId;
     }
+
     public String getZipcode() {
         return zipcode;
     }
+
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
+
     public String getCity() {
         return city;
     }
@@ -48,7 +55,7 @@ public class Location {
     public void setCity(String city) {
         this.city = city;
     }
-    
+
     public List<Event> getEvents() {
         return events;
     }
@@ -61,5 +68,5 @@ public class Location {
     public String toString() {
         return "Location [locationId = " + locationId + " zipcode =" + zipcode + " city =" + city + "]";
     }
-    
+
 }
