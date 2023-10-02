@@ -58,11 +58,15 @@
 						<option th:each="location: ${locations}" th:value="${location.locationId}"
 							th:text="${location.city} + ' ' + ${location.zipcode}"></option>
 					</select>
+					<a style="font-size: smaller; color: grey;">
+						Don't see the location you want?
+						<span style="text-decoration: underline; cursor: pointer;" onclick="location.href='/addLocation'">Add Location</span>
+					</a>
 				</div><br>
 
 				<div class="form-group align-center">
 					<input type="submit" class="btn btn-success" value="Save"></input>
-					<a class="btn btn-secondary" href="/eventlist" role="button">All events</a>
+					<a class="btn btn-secondary" href="/eventlist" role="button">All events</a>					
 				</div>
 			</form>
 		</div>
