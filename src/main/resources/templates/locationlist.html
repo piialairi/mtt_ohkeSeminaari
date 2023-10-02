@@ -27,6 +27,14 @@
                     <td th:text="${location.locationId}"></td>
                     <td th:text="${location.zipcode}"></td>
                     <td th:text="${location.city}"></td>
+
+                    <td>
+                        <form th:action="@{/deleteLocation/{locationId}(locationId=${location.locationId})}" method="get"
+                            onsubmit="return confirm('r u sure u want 2 delete dis?')">
+                            <button type="submit" class="btn btn-danger" style="margin: 10px;">Delete</button>
+
+                        </form>
+                    </td> 
                 </tr>
             </tbody>
         </table>
