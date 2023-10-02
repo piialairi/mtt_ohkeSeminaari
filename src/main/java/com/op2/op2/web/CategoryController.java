@@ -51,7 +51,7 @@ public class CategoryController {
         return "redirect:categorylist";
     }
 
-    @RequestMapping(value="/delete/{categoryName}", method=RequestMethod.GET)
+    @RequestMapping(value="/deleteCategory/{categoryName}", method=RequestMethod.GET)
     public String deleteCategory(@PathVariable("categoryName") String categoryName)  {
         categoryRepository.deleteById(categoryName);
         return "redirect:/categorylist";
