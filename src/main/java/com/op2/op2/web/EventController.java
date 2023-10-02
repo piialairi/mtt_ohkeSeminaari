@@ -65,7 +65,7 @@ public class EventController {
         }
     }
 
-    @RequestMapping(value = "/delete/{eventId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteEvent/{eventId}", method = RequestMethod.GET)
     public String deleteEvent(@PathVariable("eventId") Long eventId) {
         eventRepository.deleteById(eventId);
         return "redirect:/eventlist";
