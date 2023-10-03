@@ -57,11 +57,10 @@ public class RepositoryTests {
     public void deleteEvent() {
         Event newevent = new Event("Test event name", LocalDate.now(), "test description", 100);
         eventRepository.save(newevent);
-        Event newevents = eventRepository.findByEventId(newevent.getEventId());
-    //    assertNotEquals(event.getEventId(), null);
-        newevents.setEventName("Event to delete");
-        newevents.setEventName(null);
-        List<Event> listnewevent = eventRepository.findByEventName("Event to delete");
+       
+        eventRepository.deleteById(newevent.getEventId());
+ 
+        List<Event> listnewevent = eventRepository.findByEventName("Test event name");
         assertThat(listnewevent).hasSize(0);
     }
 }
