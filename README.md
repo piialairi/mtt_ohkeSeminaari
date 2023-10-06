@@ -103,7 +103,7 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 
 **Javakaavio**
 
-<img width="643" alt="javakaavio v1" src="https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/assets/112238330/1f4f1a38-cef2-4b21-abfe-7f8cf1828beb">
+<img width="643" alt="javakaavio v1" src="Docs/tietokanta/javakaavio v1.png">
 
 
 ## Tietohakemisto
