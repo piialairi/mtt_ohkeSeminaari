@@ -34,6 +34,10 @@ public class Event {
     @JoinColumn(name = "locationId")
     private Location location;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoryName")
+    private Category category;
+
     public Event() {
 
     }
@@ -53,6 +57,17 @@ public class Event {
         this.description = description;
         this.price = price;
         this.location = location;
+    }
+
+    public Event(String eventName, LocalDate date, String description, double price, Location location,
+            Category category) {
+        super();
+        this.eventName = eventName;
+        this.date = date;
+        this.description = description;
+        this.price = price;
+        this.location = location;
+        this.category = category;
     }
 
     public Long getEventId() {
@@ -103,6 +118,14 @@ public class Event {
         this.location = location;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     /*
      * @Override
      * public String toString() {
@@ -110,10 +133,16 @@ public class Event {
      * " date = " + date + " description = " + description + " price = " + price +
      * "]";
      * }
-     */
+     
+    * @Override
+    * public String toString() {
+    *     return "Event [eventId = " + eventId + " eventName = " + eventName + " date = " + date + " description = "
+    *             + description + " price = " + price + ", location=" + location + "]";
+    * }
+    */
     @Override
     public String toString() {
         return "Event [eventId = " + eventId + " eventName = " + eventName + " date = " + date + " description = "
-                + description + " price = " + price + ", location=" + location + "]";
+                + description + " price = " + price + " location=" + location + " category = " + category + "]";
     }
 }

@@ -9,5 +9,7 @@ public interface EventRepository extends CrudRepository<Event, Long> {
     List<Event> findByEventName(String eventName);
 
     Event findByEventId(long eventId);
+
     List<Event> findByLocation(Location location);
+    List<Event> findByCategory(Category category);
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.op2.op2.domain.CategoryRepository;
 import com.op2.op2.domain.Event;
 import com.op2.op2.domain.EventRepository;
 // import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +25,13 @@ public class EventController {
 
     @Autowired
     private EventRepository eventRepository;
+    
     @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+    
 
     // List all Events
     @RequestMapping(path = "/eventlist", method = RequestMethod.GET)
@@ -42,6 +48,7 @@ public class EventController {
         model.addAttribute("newEvent", newEvent);
         model.addAttribute("newevent", new Event());
         model.addAttribute("locations", locationRepository.findAll());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "addevent";
     }
 
@@ -50,6 +57,7 @@ public class EventController {
     public String editEvent(@PathVariable("id") Long eventId, Model model) {
         model.addAttribute("editEvent", eventRepository.findById(eventId));
         model.addAttribute("locations", locationRepository.findAll());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "editevent";
     }
 
@@ -58,6 +66,7 @@ public class EventController {
     public String saveEvent(@Valid @ModelAttribute("newevent") Event event, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("locations", locationRepository.findAll());
+            model.addAttribute("categories", categoryRepository.findAll());
             return "addevent";
         } else {
             eventRepository.save(event);
@@ -65,6 +74,7 @@ public class EventController {
         }
     }
 
+    //Delete event
     @RequestMapping(value = "/deleteEvent/{eventId}", method = RequestMethod.GET)
     public String deleteEvent(@PathVariable("eventId") Long eventId) {
         eventRepository.deleteById(eventId);

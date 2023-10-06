@@ -40,7 +40,7 @@ public class CategoryController {
     //Edit category
     @GetMapping("/editCategory/{categoryName}")
     public String editCategory(@PathVariable("categoryName") String categoryName, Model model) {
-        model.addAttribute("editCategory", categoryRepository.findById(categoryName));
+        model.addAttribute("editCategory", categoryRepository.findByCategoryName(categoryName));
         return "editcategory";
     }
     

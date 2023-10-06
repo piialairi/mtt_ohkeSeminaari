@@ -1,7 +1,10 @@
 package com.op2.op2.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -9,6 +12,9 @@ public class Category {
     @Id
     private String categoryName;
     private String description;
+
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE}, mappedBy = "category")
+    private List<Event> events;
 
     public Category() {
 
@@ -34,6 +40,14 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override
