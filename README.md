@@ -96,10 +96,8 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 
 **Relaatiokaavio**
 
-<img width="352" alt="relaatiokaavio v1" src="https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/assets/112238330/50555825-ec31-4d8f-a15f-4171def54232">
+<img width="352" alt="relaatiokaavio v1" src="Docs/tietokanta/relaatiokaavio v1.png">
 
-<!-- ![TietokantaV1](https://cdn.discordapp.com/attachments/1143485239105171548/1149753145711399114/relaatiokaavio_v1.png) 
-![TietokantaV2](https://cdn.discordapp.com/attachments/1143485239105171548/1151100918528483359/image.png)-->
 
 **Javakaavio**
 
