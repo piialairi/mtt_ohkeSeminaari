@@ -39,7 +39,10 @@
                     <td th:text="${event.description}"></td>
                     <td th:text="${event.price}"></td>
                     <td th:text="${event.location.city}"></td>
-                    <td th:text="${event.category.categoryName}"></td>
+                    <td>
+                        <span th:if="${event.category != null}"
+                        th:text="${event.category.categoryName}"></span>
+                    </td>
                     
                     <td>
                         <form th:action="@{/deleteEvent/{eventId}(eventId=${event.eventId})}" method="get"

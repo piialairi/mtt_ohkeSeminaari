@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.op2.op2.domain.Category;
 import com.op2.op2.domain.CategoryRepository;
 // import org.springframework.web.bind.annotation.RequestParam;
+import com.op2.op2.domain.Event;
 
 
 @Controller
@@ -52,7 +53,13 @@ public class CategoryController {
     }
 
     @RequestMapping(value="/deleteCategory/{categoryName}", method=RequestMethod.GET)
-    public String deleteCategory(@PathVariable("categoryName") String categoryName)  {
+    public String deleteCategory(@PathVariable("categoryName") String categoryName) {
+        var category = categoryRepository.findById(categoryName).get();
+        var events = category.getEvents();
+        for (Event event : events) {
+            event.setCategory(null);
+        }
+        categoryRepository.save(category);
         categoryRepository.deleteById(categoryName);
         return "redirect:/categorylist";
     }

@@ -27,9 +27,7 @@
                     <td>
                         <form th:action="@{/deleteCategory/{categoryName}(categoryName=${category.categoryName})}" method="get"
                             onsubmit="return confirm('Are you sure you want to delete this category?')">
-                            <button type="submit" class="btn btn-danger" style="margin: 10px;" disabled>Delete</button>
-                            <!--delete-button disabled, because now it's deleting related events-->
-                            delete-disabled
+                            <button type="submit" class="btn btn-danger" style="margin: 10px;">Delete</button>
                         </form>
                     </td> 
                 </tr>

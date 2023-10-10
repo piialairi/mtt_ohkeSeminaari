@@ -13,7 +13,7 @@ public class Category {
     private String categoryName;
     private String description;
 
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE}, mappedBy = "category")
+    @OneToMany(mappedBy = "category")
     private List<Event> events;
 
     public Category() {
