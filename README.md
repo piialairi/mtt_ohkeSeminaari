@@ -27,7 +27,7 @@ Käyttäjien lisäämien tapahtumien lisäksi sovellukseen haetaan tapahtumia my
 
 #### Projektin toteutuksessa käytettävät teknologiat: 
 - Spring Boot Java-pohjainen sovelluskehys 
-- H2-tietokanta alussa testidatan käsittelyyn, myöhemmässä vaiheessa MySQL.
+- H2-tietokanta datan käsittelyyn.
 - Käyttöliittymän toteutus alussa Thymeleaf:llä ja JavaScript:lla, myöhemmässä vaiheessa React-kirjastoa käyttäen.
 - Hyödynnämme avointa dataa muun muassa säätietojen, tapahtumien ja paikkojen hakemiseen.
 - Päätelaitteet sovelluksen käyttöön: tietokone, tabletti, älypuhelin
@@ -115,6 +115,7 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 >date | date | not null | Tapahtuman päivämäärä |
 >description | varchar(100) || Tapahtuman kuvaus |
 >price | decimal || Hinta |
+>streetAddress | varchar(100) || Tapahtuman sijainti, katuosoite |
 >category | varchar(20) FK||Tapahtuman kategoria, viittaus [_category_](#category)-tauluun|
 >locationId | int FK||Tapahtumapaikka, viittaus [_location_](https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/blob/develop/src/main/java/com/op2/op2/domain/Location.java)-tauluun|
 >username | varchar(15) FK||Tapahtuman luoneen käyttäjän id, viittaus [_user_](#user)-tauluun|

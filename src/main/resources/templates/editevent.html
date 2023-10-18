@@ -43,6 +43,12 @@
 						</div>
 					</div>
 					<div class="col-auto my-1">
+						<label class="mr-sm-2">Address</label>
+						<div class="col-sm-10">
+							<input class="form-control" type="text" th:field="*{streetAddress}" />
+						</div>
+					  </div>
+					<div class="col-auto my-1">
 						<label class="mr-sm-2">Category</label>
 						<select class="form-control col-sm-10" id="categories" th:field="*{category}" >
 							   <option th:each="category: ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>

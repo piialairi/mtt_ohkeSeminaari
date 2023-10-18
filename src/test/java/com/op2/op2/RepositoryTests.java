@@ -22,7 +22,7 @@ public class RepositoryTests {
 
     @Test
     public void findByEventNameShouldReturnListSize() {
-        Event event = new Event("Some test event name2", LocalDate.now(), "test description", 100);
+        Event event = new Event("Some test event name2", LocalDate.now(), "test description", 100, "Mannerheimintie 1");
         eventRepository.save(event);
         List<Event> eventsByName = eventRepository.findByEventName("Some test event name2");
         assertEquals(eventsByName.size(), 1); //(Assert that expected and actual are equal within the given non-negative delta.)
@@ -31,21 +31,21 @@ public class RepositoryTests {
     @Test
     public void saveNewEvent() {
         //Event(String eventName, LocalDate date, String description, double price)
-        Event event = new Event("test event", LocalDate.now(), "test description", 100);
+        Event event = new Event("test event", LocalDate.now(), "test description", 100, "Mannerheimintie 1");
         eventRepository.save(event);
         assertThat(event.getEventId()).isNotNull();
     }
 
      @Test
      public void saveNewEmptyEvent() {
-         Event event = new Event(null, null, null, 0);
+         Event event = new Event(null, null, null, 0, null);
          eventRepository.save(event);
          assertThat(event.getEventId()).isNotNull();
     }
     
     @Test
     public void updateEventName() {
-        Event event = new Event("Some test event name", LocalDate.now(), "test description", 100);
+        Event event = new Event("Some test event name", LocalDate.now(), "test description", 100, "Mannerheimintie 1");
         eventRepository.save(event);
         Optional<Event> eventbyid = eventRepository.findById((long) event.getEventId());
         assertNotEquals(eventbyid.get().getEventId(), null);
@@ -55,7 +55,7 @@ public class RepositoryTests {
     }
     @Test
     public void deleteEvent() {
-        Event newevent = new Event("Test event name", LocalDate.now(), "test description", 100);
+        Event newevent = new Event("Test event name", LocalDate.now(), "test description", 100, "Mannerheimintie 1");
         eventRepository.save(newevent);
        
         eventRepository.deleteById(newevent.getEventId());

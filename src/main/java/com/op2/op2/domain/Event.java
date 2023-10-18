@@ -29,6 +29,7 @@ public class Event {
     private LocalDate date;
     private String description;
     private double price;
+    private String streetAddress;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "locationId")
@@ -42,30 +43,33 @@ public class Event {
 
     }
 
-    public Event(String eventName, LocalDate date, String description, double price) {
+    public Event(String eventName, LocalDate date, String description, double price, String streetAddress) {
         super();
         this.eventName = eventName;
         this.date = date;
         this.description = description;
         this.price = price;
+        this.streetAddress = streetAddress;
     }
 
-    public Event(String eventName, LocalDate date, String description, double price, Location location) {
+    public Event(String eventName, LocalDate date, String description, double price, String streetAddress, Location location) {
         super();
         this.eventName = eventName;
         this.date = date;
         this.description = description;
         this.price = price;
+        this.streetAddress = streetAddress;
         this.location = location;
     }
 
-    public Event(String eventName, LocalDate date, String description, double price, Location location,
+    public Event(String eventName, LocalDate date, String description, double price, String streetAddress, Location location,
             Category category) {
         super();
         this.eventName = eventName;
         this.date = date;
         this.description = description;
         this.price = price;
+        this.streetAddress = streetAddress;
         this.location = location;
         this.category = category;
     }
@@ -109,7 +113,13 @@ public class Event {
     public void setPrice(double price) {
         this.price = price;
     }
+    public String getStreetAddress() {
+        return streetAddress;
+    }
 
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
     public Location getLocation() {
         return location;
     }
@@ -143,6 +153,6 @@ public class Event {
     @Override
     public String toString() {
         return "Event [eventId = " + eventId + " eventName = " + eventName + " date = " + date + " description = "
-                + description + " price = " + price + " location=" + location + " category = " + category + "]";
+                + description + " price = " + price + " streetaddress =" + streetAddress+ " location=" + location + " category = " + category + "]";
     }
 }
