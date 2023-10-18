@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 // import org.springframework.web.bind.annotation.PathVariable;
 
+import com.op2.op2.domain.Event;
 import com.op2.op2.domain.Location;
 import com.op2.op2.domain.LocationRepository;;
 
@@ -51,6 +52,12 @@ public class LocationController {
 
     @RequestMapping(value = "/deleteLocation/{locationId}", method = RequestMethod.GET)
     public String deleteLocation(@PathVariable("locationId") Long locationId) {
+        var location = locationRepository.findById(locationId).get();
+        var events = location.getEvents();
+        for (Event event : events) {
+            event.setLocation(null);
+        }
+        locationRepository.save(location);
         locationRepository.deleteById(locationId);
         return "redirect:/locationlist";
     }

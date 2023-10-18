@@ -1,6 +1,5 @@
 package com.op2.op2.domain;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +17,7 @@ public class Location {
     private String zipcode;
     private String city;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
+    @OneToMany(mappedBy = "location")
     @JsonIgnore
     private List<Event> events;
 
