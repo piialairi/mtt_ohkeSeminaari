@@ -25,8 +25,10 @@ public class Event {
     @NotEmpty(message = "Name cannot be empty")
     private String eventName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Date is required")
-    private LocalDate date;
+    @NotNull(message = "Starting date is required")
+    private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
     private String description;
     private double price;
     private String streetAddress;
@@ -43,30 +45,33 @@ public class Event {
 
     }
 
-    public Event(String eventName, LocalDate date, String description, double price, String streetAddress) {
+    public Event(String eventName, LocalDate startDate, LocalDate endDate, String description, double price, String streetAddress) {
         super();
         this.eventName = eventName;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.description = description;
         this.price = price;
         this.streetAddress = streetAddress;
     }
 
-    public Event(String eventName, LocalDate date, String description, double price, String streetAddress, Location location) {
+    public Event(String eventName, LocalDate startDate, LocalDate endDate, String description, double price, String streetAddress, Location location) {
         super();
         this.eventName = eventName;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.description = description;
         this.price = price;
         this.streetAddress = streetAddress;
         this.location = location;
     }
 
-    public Event(String eventName, LocalDate date, String description, double price, String streetAddress, Location location,
+    public Event(String eventName, LocalDate startDate, LocalDate endDate, String description, double price, String streetAddress, Location location,
             Category category) {
         super();
         this.eventName = eventName;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.description = description;
         this.price = price;
         this.streetAddress = streetAddress;
@@ -90,12 +95,20 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public String getDescription() {
@@ -152,7 +165,7 @@ public class Event {
     */
     @Override
     public String toString() {
-        return "Event [eventId = " + eventId + " eventName = " + eventName + " date = " + date + " description = "
+        return "Event [eventId = " + eventId + " eventName = " + eventName + " startDate = " + startDate + " endDate = " + endDate+ " description = "
                 + description + " price = " + price + " streetaddress =" + streetAddress+ " location=" + location + " category = " + category + "]";
     }
 }

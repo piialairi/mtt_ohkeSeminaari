@@ -13,9 +13,11 @@
     <div class="container">
         <h1 class="mt-5">Event List</h1>
 
-        <div class="form-group">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search by Event Name">
-            <button id="searchButton" class="btn btn-primary" style="margin: 10px;">Search</button>
+        <div class="form-inline">
+            <input type="text" id="searchInputName" class="form-control" placeholder="Search by event name">
+            <button id="searchButtonName" class="btn btn-primary" style="margin: 10px;">Search</button>
+            <input type="text" id="searchInputCity" class="form-control" placeholder="Search by city">
+            <button id="searchButtonCity" class="btn btn-primary" style="margin: 10px;">Search</button>
         </div>
 
         <table class="table mt-4">
@@ -23,7 +25,8 @@
                 <tr>
                     <th>Event ID</th>
                     <th>Event Name</th>
-                    <th>Date</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                     <th>Description</th>
                     <th>Price</th>
                     <th>Address</th>
@@ -36,7 +39,8 @@
                 <tr th:each="event : ${events}">
                     <td th:text="${event.eventId}"></td>
                     <td th:text="${event.eventName}"></td>
-                    <td th:text="${event.date}"></td>
+                    <td th:text="${event.startDate}"></td>
+                    <td th:text="${event.endDate}"></td>
                     <td th:text="${event.description}"></td>
                     <td th:text="${event.price}"></td>
                     <td th:text="${event.streetAddress}"></td>
@@ -72,8 +76,8 @@
 
 </body>
 <script>
-    document.getElementById("searchButton").addEventListener("click", function () {
-        var searchTerm = document.getElementById("searchInput").value.toLowerCase();
+    document.getElementById("searchButtonName").addEventListener("click", function () {
+        var searchTerm = document.getElementById("searchInputName").value.toLowerCase();
         var tableBody = document.getElementById("eventTableBody");
         var eventRows = tableBody.getElementsByTagName("tr");
 
@@ -86,9 +90,25 @@
                 } else {
                     eventRows[i].style.display = "none";
                 }
+            } 
+        }
+    });
+    document.getElementById("searchButtonCity").addEventListener("click", function () {
+        var searchTerm = document.getElementById("searchInputCity").value.toLowerCase();
+        var tableBody = document.getElementById("eventTableBody");
+        var eventRows = tableBody.getElementsByTagName("tr");
+
+        for (var i = 0; i < eventRows.length; i++) {
+            var eventCityCell = eventRows[i].getElementsByTagName("td")[7];
+            if (eventCityCell) {
+                var city = eventCityCell.textContent.toLowerCase();
+                if (city.includes(searchTerm)) {
+                    eventRows[i].style.display = "";
+                } else {
+                    eventRows[i].style.display = "none";
+                }
             }
         }
     });
 </script>
-
 </html>
