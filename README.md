@@ -58,7 +58,7 @@ Järjestelmänvalvoja:
     (use case diagram) tai käyttäjätarinoina.
 -   Lyhyt kuvaus käyttötapauksista tai käyttäjätarinat
 -->
-**käyttäjätarinat**
+**Käyttäjätarinat**
 - Käyttäjä pystyy valitsemaan oman sijaintinsa. 
 - Kirjautunut käyttäjä voi lisätä tapahtuman. 
 - Käyttäjä pystyy poistamaan lisäämänsä tapahtuman. 
@@ -73,14 +73,35 @@ Järjestelmänvalvoja:
 
 <!--Kuvauksissa kannattaa harkita, mikä on toteuttajalle ja asiakkaalle oleellista
 tietoa ja keskittyä siihen.
+-->
 
-<!-- 
 ## Käyttöliittymä
-
+<!-- 
 Esitetään käyttöliittymän tärkeimmät (vain ne!) näkymät sekä niiden väliset siirtymät käyttöliittymäkaaviona. 
 
 Jos näkymän tarkoitus ei ole itsestään selvä, se pitää kuvata lyhyesti.
 -->
+### Käyttöliittymän prototyyppi
+
+Käyttöliittymän prototyyppi on toteutettu [Figmalla](https://www.figma.com/file/MbKIatc8buUi5PDbG2eMug/Mit%C3%A4-t%C3%A4n%C3%A4%C3%A4n-teht%C3%A4isiin%3F?type=design&node-id=0-1&mode=design&t=KFWWk05WZ1VpIDNx-0).
+
+### Käyttöliittymä toteutettu Thymeleafilla
+
+* Tapahtumalista, uuden tapahtuman luonti, siirtymä sijaintilistalle, siirtymä kategorialistalle.
+<img width="643" alt="eventlist_v1" src="Docs/kayttoliittyma/eventlist.jpg">
+
+* Tapahtuman haku sen nimen tai kaupungin perusteella.
+<img width="643" alt="search_event_v1" src="Docs/kayttoliittyma/event-search.jpg">
+
+* Tapahtuman tietojen muokkaus ja tapahtuman poisto.
+<img width="643" alt="edit-delete_event_v1" src="Docs/kayttoliittyma/event-edit-delete.jpg">
+
+* Kaupunkilista, listan rajaus kaupunkinimen perusteella, uuden kaupungin/postinumeron luonti ja poisto.
+<img width="643" alt="locationlist_v1" src="Docs/kayttoliittyma/locationlist.jpg">
+
+* Kategorialista, uuden kategorian luonti ja poisto.
+<img width="643" alt="categorylist_v1" src="Docs/kayttoliittyma/categorylist.jpg">
+
 ## Tietokanta
 
 <!-- Järjestelmään säilöttävä ja siinä käsiteltävät tiedot ja niiden väliset suhteet
