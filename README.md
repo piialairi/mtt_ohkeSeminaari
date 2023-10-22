@@ -112,13 +112,14 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 >---|---|---|---|
 >eventId |Long PK |not null | Tapahtuman id |
 >eventName |varchar(30)| not null | Tapahtuman nimi |
->date | date | not null | Tapahtuman päivämäärä |
+>startDate | date | not null | Tapahtuman alkamispäivämäärä |
+>endDate | date || Tapahtuman loppupäivämäärä |
 >description | varchar(100) || Tapahtuman kuvaus |
 >price | decimal || Hinta |
 >streetAddress | varchar(100) || Tapahtuman sijainti, katuosoite |
->category | varchar(20) FK||Tapahtuman kategoria, viittaus [_category_](#category)-tauluun|
->locationId | int FK||Tapahtumapaikka, viittaus [_location_](https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/blob/develop/src/main/java/com/op2/op2/domain/Location.java)-tauluun|
->username | varchar(15) FK||Tapahtuman luoneen käyttäjän id, viittaus [_user_](#user)-tauluun|
+>locationId | int FK||Tapahtuman sijainti, kaupunki ja postinumero, viittaus [_location_](#location)-tauluun|
+>categoryName | varchar(20) FK||Tapahtuman kategoria, viittaus [_category_](#category)-tauluun|
+>username | varchar(15) FK||Tapahtuman luoneen käyttäjän id, viittaus [_enduser_](#enduser)-tauluun|
 
 
 >### **Location**
