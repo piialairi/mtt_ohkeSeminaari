@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,7 +17,11 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long locationId;
+    @Size(max = 5, message = "Zipcode cannot exceed 5 characters")
+    @NotBlank(message = "Zipcode is required")
     private String zipcode;
+    @Size(max = 40, message = "City cannot exceed 40 characters")
+    @NotBlank(message = "City is required")
     private String city;
 
     @OneToMany(mappedBy = "location")
