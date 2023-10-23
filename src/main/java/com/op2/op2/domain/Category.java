@@ -3,6 +3,8 @@ package com.op2.op2.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,7 +13,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Category {
 
     @Id
+    @NotEmpty(message = "Category name cannot be empty")
+    @Size(min = 1, max = 30, message = "Category name must be between 1 and 30 characters")
     private String categoryName;
+
+    @NotEmpty(message = "Description cannot be empty")
     private String description;
 
     @OneToMany(mappedBy = "category")
