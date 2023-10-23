@@ -117,12 +117,12 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 
 **Relaatiokaavio**
 
-<img width="352" alt="relaatiokaavio v1" src="Docs/tietokanta/relaatiokaavio_3.png">
+<img width="352" alt="relaatiokaavio v1" src="Docs/tietokanta/relaatiokaavio_v4.png">
 
 
 **Javakaavio**
 
-<img width="643" alt="javakaavio v1" src="Docs/tietokanta/javakaavio_3.png">
+<img width="643" alt="javakaavio v1" src="Docs/tietokanta/javakaavio_v4.png">
 
 
 ## Tietohakemisto
