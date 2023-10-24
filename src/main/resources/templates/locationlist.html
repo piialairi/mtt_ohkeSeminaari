@@ -20,6 +20,7 @@
                     <th>Location ID</th>
                     <th>Zipcode</th>
                     <th>City</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="locationTableBody">
@@ -30,7 +31,7 @@
 
                     <td>
                         <form th:action="@{/deleteLocation/{locationId}(locationId=${location.locationId})}" method="get"
-                            onsubmit="return confirm('r u sure u want 2 delete dis?')">
+                            onsubmit="return confirm('Are you sure you want to delete this location?')">
                             <button type="submit" class="btn btn-danger" style="margin: 10px;">Delete</button>
 
                         </form>

@@ -27,7 +27,7 @@ Käyttäjien lisäämien tapahtumien lisäksi sovellukseen haetaan tapahtumia my
 
 #### Projektin toteutuksessa käytettävät teknologiat: 
 - Spring Boot Java-pohjainen sovelluskehys 
-- H2-tietokanta alussa testidatan käsittelyyn, myöhemmässä vaiheessa MySQL.
+- H2-tietokanta datan käsittelyyn.
 - Käyttöliittymän toteutus alussa Thymeleaf:llä ja JavaScript:lla, myöhemmässä vaiheessa React-kirjastoa käyttäen.
 - Hyödynnämme avointa dataa muun muassa säätietojen, tapahtumien ja paikkojen hakemiseen.
 - Päätelaitteet sovelluksen käyttöön: tietokone, tabletti, älypuhelin
@@ -58,7 +58,7 @@ Järjestelmänvalvoja:
     (use case diagram) tai käyttäjätarinoina.
 -   Lyhyt kuvaus käyttötapauksista tai käyttäjätarinat
 -->
-**käyttäjätarinat**
+**Käyttäjätarinat**
 - Käyttäjä pystyy valitsemaan oman sijaintinsa. 
 - Kirjautunut käyttäjä voi lisätä tapahtuman. 
 - Käyttäjä pystyy poistamaan lisäämänsä tapahtuman. 
@@ -73,14 +73,35 @@ Järjestelmänvalvoja:
 
 <!--Kuvauksissa kannattaa harkita, mikä on toteuttajalle ja asiakkaalle oleellista
 tietoa ja keskittyä siihen.
+-->
 
-<!-- 
 ## Käyttöliittymä
-
+<!-- 
 Esitetään käyttöliittymän tärkeimmät (vain ne!) näkymät sekä niiden väliset siirtymät käyttöliittymäkaaviona. 
 
 Jos näkymän tarkoitus ei ole itsestään selvä, se pitää kuvata lyhyesti.
 -->
+### Käyttöliittymän prototyyppi
+
+Käyttöliittymän prototyyppi on toteutettu [Figmalla](https://www.figma.com/file/MbKIatc8buUi5PDbG2eMug/Mit%C3%A4-t%C3%A4n%C3%A4%C3%A4n-teht%C3%A4isiin%3F?type=design&node-id=0-1&mode=design&t=KFWWk05WZ1VpIDNx-0).
+
+### Käyttöliittymä toteutettu Thymeleafilla
+
+* Tapahtumalista, uuden tapahtuman luonti, siirtymä sijaintilistalle, siirtymä kategorialistalle.
+<img width="643" alt="eventlist_v1" src="Docs/kayttoliittyma/eventlist.jpg">
+
+* Tapahtuman haku sen nimen tai kaupungin perusteella.
+<img width="643" alt="search_event_v1" src="Docs/kayttoliittyma/event-search.jpg">
+
+* Tapahtuman tietojen muokkaus ja tapahtuman poisto.
+<img width="643" alt="edit-delete_event_v1" src="Docs/kayttoliittyma/event-edit-delete.jpg">
+
+* Kaupunkilista, listan rajaus kaupunkinimen perusteella, uuden kaupungin/postinumeron luonti ja poisto.
+<img width="643" alt="locationlist_v1" src="Docs/kayttoliittyma/locationlist.jpg">
+
+* Kategorialista, uuden kategorian luonti ja poisto.
+<img width="643" alt="categorylist_v1" src="Docs/kayttoliittyma/categorylist.jpg">
+
 ## Tietokanta
 
 <!-- Järjestelmään säilöttävä ja siinä käsiteltävät tiedot ja niiden väliset suhteet
@@ -96,14 +117,12 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 
 **Relaatiokaavio**
 
-<img width="352" alt="relaatiokaavio v1" src="https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/assets/112238330/50555825-ec31-4d8f-a15f-4171def54232">
+<img width="352" alt="relaatiokaavio v1" src="Docs/tietokanta/relaatiokaavio_v4.png">
 
-<!-- ![TietokantaV1](https://cdn.discordapp.com/attachments/1143485239105171548/1149753145711399114/relaatiokaavio_v1.png) 
-![TietokantaV2](https://cdn.discordapp.com/attachments/1143485239105171548/1151100918528483359/image.png)-->
 
 **Javakaavio**
 
-<img width="643" alt="javakaavio v1" src="https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/assets/112238330/1f4f1a38-cef2-4b21-abfe-7f8cf1828beb">
+<img width="643" alt="javakaavio v1" src="Docs/tietokanta/javakaavio_v4.png">
 
 
 ## Tietohakemisto
@@ -114,12 +133,14 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 >---|---|---|---|
 >eventId |Long PK |not null | Tapahtuman id |
 >eventName |varchar(30)| not null | Tapahtuman nimi |
->date | date | not null | Tapahtuman päivämäärä |
+>startDate | date | not null | Tapahtuman alkamispäivämäärä |
+>endDate | date || Tapahtuman loppupäivämäärä |
 >description | varchar(100) || Tapahtuman kuvaus |
 >price | decimal || Hinta |
->category | varchar(20) FK||Tapahtuman kategoria, viittaus [_category_](#category)-tauluun|
->locationId | int FK||Tapahtumapaikka, viittaus [_location_](https://github.com/Ohjelmistoprojekti2-Black/mtt-backend/blob/develop/src/main/java/com/op2/op2/domain/Location.java)-tauluun|
->username | varchar(15) FK||Tapahtuman luoneen käyttäjän id, viittaus [_user_](#user)-tauluun|
+>streetAddress | varchar(100) || Tapahtuman sijainti, katuosoite |
+>locationId | int FK||Tapahtuman sijainti, kaupunki ja postinumero, viittaus [_location_](#location)-tauluun|
+>categoryName | varchar(20) FK||Tapahtuman kategoria, viittaus [_category_](#category)-tauluun|
+>username | varchar(15) FK||Tapahtuman luoneen käyttäjän id, viittaus [_enduser_](#enduser)-tauluun|
 
 
 >### **Location**

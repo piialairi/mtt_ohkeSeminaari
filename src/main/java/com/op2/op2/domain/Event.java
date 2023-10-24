@@ -25,34 +25,58 @@ public class Event {
     @NotEmpty(message = "Name cannot be empty")
     private String eventName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Date is required")
-    private LocalDate date;
+    @NotNull(message = "Starting date is required")
+    private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
     private String description;
     private double price;
+    private String streetAddress;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "locationId")
     private Location location;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoryName")
+    private Category category;
+
     public Event() {
 
     }
 
-    public Event(String eventName, LocalDate date, String description, double price) {
+    public Event(String eventName, LocalDate startDate, LocalDate endDate, String description, double price, String streetAddress) {
         super();
         this.eventName = eventName;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.description = description;
         this.price = price;
+        this.streetAddress = streetAddress;
     }
 
-    public Event(String eventName, LocalDate date, String description, double price, Location location) {
+    public Event(String eventName, LocalDate startDate, LocalDate endDate, String description, double price, String streetAddress, Location location) {
         super();
         this.eventName = eventName;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.description = description;
         this.price = price;
+        this.streetAddress = streetAddress;
         this.location = location;
+    }
+
+    public Event(String eventName, LocalDate startDate, LocalDate endDate, String description, double price, String streetAddress, Location location,
+            Category category) {
+        super();
+        this.eventName = eventName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.price = price;
+        this.streetAddress = streetAddress;
+        this.location = location;
+        this.category = category;
     }
 
     public Long getEventId() {
@@ -71,12 +95,20 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public String getDescription() {
@@ -94,13 +126,27 @@ public class Event {
     public void setPrice(double price) {
         this.price = price;
     }
+    public String getStreetAddress() {
+        return streetAddress;
+    }
 
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
     public Location getLocation() {
         return location;
     }
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     /*
@@ -110,10 +156,16 @@ public class Event {
      * " date = " + date + " description = " + description + " price = " + price +
      * "]";
      * }
-     */
+     
+    * @Override
+    * public String toString() {
+    *     return "Event [eventId = " + eventId + " eventName = " + eventName + " date = " + date + " description = "
+    *             + description + " price = " + price + ", location=" + location + "]";
+    * }
+    */
     @Override
     public String toString() {
-        return "Event [eventId = " + eventId + " eventName = " + eventName + " date = " + date + " description = "
-                + description + " price = " + price + ", location=" + location + "]";
+        return "Event [eventId = " + eventId + " eventName = " + eventName + " startDate = " + startDate + " endDate = " + endDate+ " description = "
+                + description + " price = " + price + " streetaddress =" + streetAddress+ " location=" + location + " category = " + category + "]";
     }
 }
