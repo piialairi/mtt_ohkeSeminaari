@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0) 
+  const [count, setCount] = useState(0)
   const [events, setEvents] = useState([])
 
   /* useEffect(() => {
@@ -27,24 +27,28 @@ function App() {
   }, []);*/
 
   return (
-    <>      
+    <>
+      <header className="header">
+        <h1>MTT</h1>
+        <button title='Log in'>Log in</button>
+      </header>
       <h1 style={{ fontSize: '15px' }}>
-      {events.map(event => (
-        <div key={event.eventId}>
-          <p>Event Name: {event.eventName}</p>
-          <p>Date: {event.date}</p>
-          <p>Description: {event.description}</p>
-          <p>Price: ${event.price}</p>
-          <p>Street Address: {event.streetAddress}</p>
-          <p>Location ID: {event.location.locationId}</p>
-          <p>Zipcode: {event.location.zipcode}</p>
-          <p>City: {event.location.city}</p>          
-          <p>Category Name: {event.category.categoryName}</p>
-          <p>Category Description: {event.category.description}</p>
-          <p>-------------------------------</p>
-        </div>
-      ))}
-</h1>
+        {events.map(event => (
+          <div key={event.eventId}>
+            <p>Event Name: {event.eventName}</p>
+            <p>Date: {event.date}</p>
+            <p>Description: {event.description}</p>
+            <p>Price: ${event.price}</p>
+            <p>Street Address: {event.streetAddress}</p>
+            <p>Location ID: {event.location.locationId}</p>
+            <p>Zipcode: {event.location.zipcode}</p>
+            <p>City: {event.location.city}</p>
+            <p>Category Name: {event.category.categoryName}</p>
+            <p>Category Description: {event.category.description}</p>
+            <p>-------------------------------</p>
+          </div>
+        ))}
+      </h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
@@ -58,6 +62,7 @@ function App() {
       </p>
     </>
   )
+
 }
 
 export default App
