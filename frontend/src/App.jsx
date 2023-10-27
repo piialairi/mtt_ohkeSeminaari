@@ -36,7 +36,8 @@ function App() {
         {events.map(event => (
           <div key={event.eventId}>
             <p>Event Name: {event.eventName}</p>
-            <p>Date: {event.date}</p>
+            <p>Start Date: {event.startDate}</p>
+            <p>End Date: {event.endDate}</p>
             <p>Description: {event.description}</p>
             <p>Price: ${event.price}</p>
             <p>Street Address: {event.streetAddress}</p>
