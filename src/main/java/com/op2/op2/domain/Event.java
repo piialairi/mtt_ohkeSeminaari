@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +29,7 @@ public class Event {
     @NotNull(message = "Starting date is required")
     private LocalDate startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Nullable //when editing event it allows to set endDate as null
     private LocalDate endDate;
     private String description;
     private double price;

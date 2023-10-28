@@ -68,6 +68,11 @@ public class EventController {
             model.addAttribute("locations", locationRepository.findAll());
             model.addAttribute("categories", categoryRepository.findAll());
             return "addevent";
+        } else if(event.getEndDate() != null && event.getEndDate().isBefore(event.getStartDate())){
+            bindingResult.rejectValue("endDate", "endDate", "End date cannot be earlier than a start date");
+            model.addAttribute("locations", locationRepository.findAll());
+            model.addAttribute("categories", categoryRepository.findAll());
+            return "addevent";
         } else {
             eventRepository.save(event);
             return "redirect:eventlist";
