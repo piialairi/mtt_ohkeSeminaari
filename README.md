@@ -57,6 +57,9 @@ spring.datasource.username=${DB_USER}
 spring.datasource.password=${DB_PASSWORD}
 ```
 
+### Swagger-UI 
+REST-dokumentaatio löytyy osoitteesta:
+http://localhost:8080/swagger-ui/index.html
 
 ## Järjestelmän määrittely
 
