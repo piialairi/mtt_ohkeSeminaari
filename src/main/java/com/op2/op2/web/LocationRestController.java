@@ -20,8 +20,11 @@ import org.springframework.web.server.ResponseStatusException;
 import com.op2.op2.domain.Location;
 import com.op2.op2.domain.LocationRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @CrossOrigin("http://localhost:5173")
+@Tag(name="Location REST", description="Information on locations")
 public class LocationRestController {
     private final Logger log = LoggerFactory.getLogger(LocationRestController.class);
 
