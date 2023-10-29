@@ -17,7 +17,7 @@ function FrontPage() {
         <>
             <Typography>All events</Typography>
                 
-            <h1 style={{ fontSize: '15px' }}>
+            <h1 style={{ fontSize: '15px', color: 'black'}}>
                 {events.map(event => (
                     <div key={event.eventId}>
                         <p>Event Name: {event.eventName}</p>

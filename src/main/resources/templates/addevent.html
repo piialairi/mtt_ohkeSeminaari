@@ -7,6 +7,9 @@
 	<!-- Bootstrap CSS https://getbootstrap.com/docs/4.4/getting-started/introduction/-->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
 		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
 	<title>New event</title>
 </head>
@@ -73,7 +76,7 @@
 					</select>
 					<a style="font-size: smaller; color: grey;">
 						Don't see the location you want?
-						<span style="text-decoration: underline; cursor: pointer;" onclick="location.href='/addLocation'">Add Location</span>
+						<span style="text-decoration: underline; cursor: pointer;" id="addLocationLink">Add Location</span>
 					</a>
 				</div><br>
 
@@ -84,6 +87,73 @@
 			</form>
 		</div>
 	</div>
+	<div class="modal" id="addLocationModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Add Location</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="locationForm">
+						<div class="form-group">
+							<label for="city">City</label>
+							<input type="text" class="form-control" id="city" name="city" required>
+						</div>
+						<div class="form-group">
+							<label for="zipcode">Zipcode</label>
+							<input type="text" class="form-control" id="zipcode" name="zipcode" required>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="saveLocation">Save Location</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function () {
+			// open modal on "add location" click
+			$("#addLocationLink").click(function () {
+				$("#addLocationModal").modal('show');
+			});
+	
+			// Handle the "save Location" button click
+			$("#saveLocation").click(function () {
+				var city = $("#city").val();
+				var zipcode = $("#zipcode").val();
+	
+				
+				if (!city || !zipcode) {					
+					alert("City and Zipcode are required.");
+					return;
+				}
+	
+				//save the information
+				$.ajax({
+					type: "POST",
+					url: "/saveLocation", 
+					data: {
+						city: city,
+						zipcode: zipcode
+					},
+					success: function (response) {
+						//if successful add information to location dropdown menu and hide modal
+						$("#locations").append(new Option(city + ' ' + zipcode, response.locationId, true, true));
+						$("#addLocationModal").modal('hide');
+					},
+					error: function (error) {
+						
+						alert("Error saving location.");
+					}
+				});
+			});
+		});
+	</script>
 </body>
 
 </html>
