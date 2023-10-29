@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TabMUI from './navigation/TabMUI';
 import FrontPage from './components/FrontPage';
 import OwnEvents from './components/OwnEvents';
+import LoginPage from './components/Login';
 
 function App() {
   
@@ -26,6 +27,7 @@ function App() {
         <Route path='/' element={<TabMUI />}>
           <Route index element={<FrontPage/>}/>
           <Route path='ownevents' element={<OwnEvents />} />      
+          <Route path='login' element={<LoginPage />} /> 
         </Route>
       </Routes>
     </BrowserRouter>

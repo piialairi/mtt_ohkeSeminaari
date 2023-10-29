@@ -28,7 +28,9 @@ function TabMUI() {
             </Tabs>
             </Box>
           <Box>
-            <button title='Log in'>Log in</button>
+            <a href="/login">
+              <button title="Log in">Log in</button>
+            </a>
           </Box>
         </Toolbar>  
       </AppBar>
