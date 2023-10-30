@@ -14,7 +14,7 @@ function TabMUI() {
   }
   return (
     <>
-      <AppBar position='sticky'>
+      <AppBar position='sticky' sx={{mt:0, mb:'36px'}}>
         <Toolbar>
           <Box sx={{ flexGrow: 1, justifyContent: 'space-between'}}>
             <header className="header">
@@ -24,7 +24,7 @@ function TabMUI() {
           <Box sx={{ flexGrow: 1 }}>
           <Tabs value={value} onChange={handleChange} variant='fullWidth' centered selectionFollowsFocus textColor='inherit' TabIndicatorProps={{ style: { background: 'white' } }}>
               <Tab label='Etusivu' component={Link} to='/'/>
-              <Tab label='Omat tapahtumat'component={Link} to='ownevents'/>
+              <Tab label='Omat tapahtumat'component={Link} to='myevents'/>
             </Tabs>
             </Box>
           <Box>

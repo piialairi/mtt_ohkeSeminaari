@@ -3,7 +3,7 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TabMUI from './navigation/TabMUI';
 import FrontPage from './components/FrontPage';
-import OwnEvents from './components/OwnEvents';
+import MyEvents from './components/MyEvents';
 import LoginPage from './components/Login';
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
       <Routes>
         <Route path='/' element={<TabMUI />}>
           <Route index element={<FrontPage/>}/>
-          <Route path='ownevents' element={<OwnEvents />} />      
+          <Route path='myevents' element={<MyEvents />} />      
           <Route path='login' element={<LoginPage />} /> 
         </Route>
       </Routes>
