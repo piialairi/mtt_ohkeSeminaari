@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { Typography } from "@mui/material";
-
+import Weather from "./Weather";
 
 function FrontPage() {
   const [events, setEvents] = useState([]);
@@ -23,6 +23,7 @@ function FrontPage() {
 
   return (
     <Paper sx={{ width: "100%" }}>
+      <Weather/>
       <Typography variant="h5">All events</Typography>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
