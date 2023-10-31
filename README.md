@@ -34,9 +34,9 @@ Käyttäjien lisäämien tapahtumien lisäksi sovellukseen haetaan tapahtumia my
 
 #### Ympäristömuuttujat:
 
-Tämän projektin kehitysvaiheessa jokaisella kehittäjällä on oma H2-tietokanta omalla koneellaan. Tietokannan nimi, käyttäjätunnus ja salasana ovat salattuja *env.properties*-tiedostossa eikä sitä näy tässä repositoriossa. Nämä tiedot ovat välttämättömiä sovelluksen oikean toiminnan kannalta. Seuraavaksi on ohjeet tarvittaviin muutoksiin:
+#### _-Backend:_
 
-#### _Backend:_
+Tämän projektin kehitysvaiheessa jokaisella kehittäjällä on oma H2-tietokanta omalla koneellaan. Tietokannan nimi, käyttäjätunnus ja salasana ovat salattuja *env.properties*-tiedostossa eikä sitä näy tässä repositoriossa. Nämä tiedot ovat välttämättömiä sovelluksen oikean toiminnan kannalta. Seuraavaksi on ohjeet tarvittaviin muutoksiin:
 
 *1.* Luo **env.properties**-niminen tiedosto projektin *src/main/resources*-kansioon.
 
@@ -60,7 +60,9 @@ spring.datasource.username=${DB_USER}
 spring.datasource.password=${DB_PASSWORD}
 ```
 
-#### _Frontend:_
+#### _-Frontend:_
+
+Sovellus käyttää OpenWeatherMap-palvelua säätietojen hakemiseen. Tämän takia tarvitaan API-avainta, joka toimii todentamistiedostona sovelluksen ja OpenWeatherMapin välillä. API-avain mahdollistaa sovelluksen saada reaaliaikaisia säätietoja eri kaupungeista.
 
 *1.* Luo **.env**-niminen tiedosto projektin *frontend*-kansioon.
 
