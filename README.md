@@ -32,6 +32,35 @@ Käyttäjien lisäämien tapahtumien lisäksi sovellukseen haetaan tapahtumia my
 - Hyödynnämme avointa dataa muun muassa säätietojen, tapahtumien ja paikkojen hakemiseen.
 - Päätelaitteet sovelluksen käyttöön: tietokone, tabletti, älypuhelin
 
+#### Tärkeää:
+Tämän projektin kehitysvaiheessa jokaisella kehittäjällä on oma H2-tietokanta omalla koneellaan. Tietokannan nimi, käyttäjätunnus ja salasana ovat salattuja *env.properties*-tiedostossa eikä sitä näy tässä repositoriossa. Nämä tiedot ovat välttämättömiä sovelluksen oikean toiminnan kannalta. Seuraavaksi on ohjeet tarvittaviin muutoksiin:
+
+*1.* Luo **env.properties**-niminen tiedosto projektin *src/main/resources*-kansiossa.
+
+*2.* Jotta varmistat, että *env.properties*-tiedosto pysyy salaisena ja vältät sen vahingossa lisäämisen versionhallintaan, lisää sen nimi **.gitignore**-tiedostoon.
+```
+env.properties
+```
+
+*3.* Muokkaa **env.properties**-tiedostoa ja tallenn siihen tietokannan tiedot: tietokannan nimi, käyttäjätunnus ja salasana. 
+```
+DB_DATABASE=mydb
+DB_USER=sa
+DB_PASSWORD=password
+```
+
+Sovellus käyttää *env.properties*-tiedostossa määriteltyjä tietokannan tietoja *resources*-kansiossa olevan **application.properties**-tiedoston avulla, se näyttää täältä:
+```
+spring.config.import=optional:env.properties
+spring.datasource.url=jdbc:h2:file:~/${DB_DATABASE};DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+```
+
+### Swagger-UI 
+REST-dokumentaatio löytyy osoitteesta:
+http://localhost:8080/swagger-ui/index.html
+
 ## Järjestelmän määrittely
 
 <!--Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän
