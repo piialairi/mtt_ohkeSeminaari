@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { Typography } from "@mui/material";
 import Weather from "./Weather";
+import { Link } from "react-router-dom";
 
 function FrontPage() {
   const [events, setEvents] = useState([]);
@@ -32,13 +33,9 @@ function FrontPage() {
               <TableCell>Event name</TableCell>
               <TableCell align="right">starts</TableCell>
               <TableCell align="right">ends</TableCell>
-              <TableCell align="right">Description</TableCell>
               <TableCell align="right">Price</TableCell>
-              <TableCell align="right">Street Address</TableCell>
-              <TableCell align="right">Zipcode</TableCell>
               <TableCell align="right">City</TableCell>
               <TableCell align="right">Category</TableCell>
-              <TableCell align="right">Category Description</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -52,13 +49,10 @@ function FrontPage() {
                 </TableCell>
                 <TableCell align="right">{event.startDate}</TableCell>
                 <TableCell align="right">{event.endDate}</TableCell>
-                <TableCell align="right">{event.description}</TableCell>
                 <TableCell align="right">{event.price} €</TableCell>
-                <TableCell align="right">{event.streetAddress}</TableCell>
-                <TableCell align="right">{event.location.zipcode}</TableCell>
                 <TableCell align="right">{event.location.city}</TableCell>
                 <TableCell align="right">{event.category.categoryName}</TableCell>
-                <TableCell align="right">{event.category.description}</TableCell>
+                <TableCell align="right"><Link to={`/event/${event.eventId}`}><button>View Details</button></Link></TableCell>
               </TableRow>
             ))}
           </TableBody>
