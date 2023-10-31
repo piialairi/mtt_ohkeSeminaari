@@ -8,16 +8,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.op2.op2.domain.Category;
 import com.op2.op2.domain.CategoryRepository;
+import com.op2.op2.domain.Event;
+import com.op2.op2.domain.EventRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -29,6 +33,7 @@ public class CategoryRestController {
 
     @Autowired
     private CategoryRepository categoryRepo;
+    private EventRepository eventRepo;
 
     @GetMapping({ "/categories" })
     public @ResponseBody List<Category> findAllCategories(){
@@ -54,6 +59,30 @@ public class CategoryRestController {
     public @ResponseBody Category saveCategoryRest(@RequestBody Category category){
         return categoryRepo.save(category);
     }
+/* 
+    @DeleteMapping({ "/categories/{name}" })
+    void deleteCategory(@PathVariable("name") String categoryName) {
+        log.info("Category has been marked as deleted: " + categoryName);
+        try {
+            categoryRepo.deleteById(categoryName);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find category with name " + categoryName);
+        }
+    }
+*/
 
+    @DeleteMapping("/categories/{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCategory(@PathVariable("name") String categoryName) {
+        var category = categoryRepo.findById(categoryName).orElse(null);
+        var events = category.getEvents();
+        
+        if (category != null) {
+            for (Event event : events) {
+                event.setCategory(null);
+            }
+            categoryRepo.delete(category);
+        }
+    }
     
 }

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,7 +52,22 @@ public class EventRestController {
         }
     }
     @PostMapping({ "/events" })
-    public @ResponseBody Event saveEventRest(@RequestBody Event event){
-        return eventRepository.save(event);
+    public Event newEvent (@RequestBody Event newEvent){
+        log.info("Save new event " + newEvent);
+        try{
+        return eventRepository.save(newEvent);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Couldn't create new event");
+        }
+    }
+
+    @DeleteMapping({ "/events/{id}" })
+    void deleteEvent(@PathVariable("id") Long eventId) {
+        log.info("Event id has been deleted: " + eventId);
+        try {
+            eventRepository.deleteById(eventId);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find event with id " + eventId);
+        }
     }
 }

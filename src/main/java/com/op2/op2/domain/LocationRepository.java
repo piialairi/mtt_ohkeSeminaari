@@ -7,10 +7,6 @@ public interface LocationRepository extends CrudRepository<Location, Long> {
 
     List<Location> findByCity(String city);
 
-    Location findByLocationId(Long locationId);
-
-    Long deleteByLocationId(Long locationId);
-
-    //Location saveLocation(Location location);
+    List<Location> findByLocationId(Long locationId);
 
 }
