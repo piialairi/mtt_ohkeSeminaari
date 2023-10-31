@@ -1,63 +1,159 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<!-- Bootstrap CSS https://getbootstrap.com/docs/4.4/getting-started/introduction/-->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- Bootstrap CSS https://getbootstrap.com/docs/4.4/getting-started/introduction/-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
-<title>New event</title>
+	<title>New event</title>
 </head>
+
 <body>
-<div class="container">
-	<div class="in-line">
-		<h1>New event</h1>
-	</div>
-	<div>
-		<form th:object="${newevent}" th:action="@{/saveEvent}" action="#" method="post">
-			  	<div class="col-auto my-1">
-			  		<label class="mr-sm-2">Name</label>
-			  		<div class="col-sm-10">
+	<div class="container">
+		<div class="in-line">
+			<h1>New event</h1>
+		</div>
+		<div>
+			<form th:object="${newevent}" th:action="@{/saveEvent}" action="#" method="post">
+				<div class="col-auto my-1">
+					<label class="mr-sm-2">Name</label>
+					<div th:if="${#fields.hasErrors('eventName')}" th:errors="*{eventName}">Error</div>
+					<div class="col-sm-10">
 						<input class="form-control" type="text" th:field="*{eventName}" />
+					</div>
+
+				</div>
+				<div class="col-auto my-1">
+					<label class="mr-sm-2">Starting Date</label>
+					<div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Error</div>
+					<div class="col-sm-10">
+						<input class="form-control" type="date" th:field="*{startDate}" />
 					</div>
 				</div>
 				<div class="col-auto my-1">
-				  	<label class="mr-sm-2">Date</label>
+					<label class="mr-sm-2">End Date</label>
+					<div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Error</div>
 					<div class="col-sm-10">
-						<input class="form-control" type="date" th:field="*{date}" />
+						<input class="form-control" type="date" th:field="*{endDate}" />
 					</div>
 				</div>
 				<div class="col-auto my-1">
 					<label class="mr-sm-2">Description</label>
-				  	<div class="col-sm-10">
+					<div class="col-sm-10">
 						<input class="form-control" type="text" th:field="*{description}" />
 					</div>
-			  	</div>
+				</div>
 				<div class="col-auto my-1">
 					<label class="mr-sm-2">Price</label>
-				  	<div class="col-sm-10">
-						<input class="form-control" type="number" min="0" placeholder="0.00" step="any" th:field="*{price}" />
+					<div class="col-sm-10">
+						<input class="form-control" type="number" min="0" placeholder="0.00" step="any"
+							th:field="*{price}" />
 					</div>
-			  	</div>
-			<!--<div class="col-auto my-1">
+				</div>
+				<div class="col-auto my-1">
+					<label class="mr-sm-2">Address</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" th:field="*{streetAddress}" />
+					</div>
+				</div>
+				<div class="col-auto my-1">
 					<label class="mr-sm-2">Category</label>
 					<select class="form-control col-sm-10" id="categories" th:field="*{category}" >
-		       			<option th:each="category: ${categories}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
-		    		</select>
-		   		</div>
-			  	<div class="col-auto my-1">
+						<option th:each="category: ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+					</select>
+				</div>
+				<div class="col-auto my-1">
 					<label class="mr-sm-2">Location</label>
-					<select class="form-control col-sm-10" id="locations" th:field="*{location}" >
-		       			<option th:each="location: ${locations}" th:value="${location.locationId}" th:text="${location.city} + ' ' + ${location.zipcode}"></option>
-		    		</select>
-		   		</div><br>
-			-->
-				<div class="form-group align-center" >	
+					<select class="form-control col-sm-10" id="locations" th:field="*{location}">
+						<option th:each="location: ${locations}" th:value="${location.locationId}"
+							th:text="${location.city} + ' ' + ${location.zipcode}"></option>
+					</select>
+					<a style="font-size: smaller; color: grey;">
+						Don't see the location you want?
+						<span style="text-decoration: underline; cursor: pointer;" id="addLocationLink">Add Location</span>
+					</a>
+				</div><br>
+
+				<div class="form-group align-center">
 					<input type="submit" class="btn btn-success" value="Save"></input>
-					<a class="btn btn-secondary" href="/eventlist" role="button">All events</a>
+					<a class="btn btn-secondary" href="/eventlist" role="button">All events</a>					
 				</div>
 			</form>
 		</div>
 	</div>
+	<div class="modal" id="addLocationModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Add Location</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="locationForm">
+						<div class="form-group">
+							<label for="city">City</label>
+							<input type="text" class="form-control" id="city" name="city" required>
+						</div>
+						<div class="form-group">
+							<label for="zipcode">Zipcode</label>
+							<input type="text" class="form-control" id="zipcode" name="zipcode" required>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="saveLocation">Save Location</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function () {
+			// open modal on "add location" click
+			$("#addLocationLink").click(function () {
+				$("#addLocationModal").modal('show');
+			});
+	
+			// Handle the "save Location" button click
+			$("#saveLocation").click(function () {
+				var city = $("#city").val();
+				var zipcode = $("#zipcode").val();
+	
+				
+				if (!city || !zipcode) {					
+					alert("City and Zipcode are required.");
+					return;
+				}
+	
+				//save the information
+				$.ajax({
+					type: "POST",
+					url: "/saveLocation", 
+					data: {
+						city: city,
+						zipcode: zipcode
+					},
+					success: function (response) {
+						//if successful add information to location dropdown menu and hide modal
+						$("#locations").append(new Option(city + ' ' + zipcode, response.locationId, true, true));
+						$("#addLocationModal").modal('hide');
+					},
+					error: function (error) {
+						
+						alert("Error saving location.");
+					}
+				});
+			});
+		});
+	</script>
 </body>
+
 </html>

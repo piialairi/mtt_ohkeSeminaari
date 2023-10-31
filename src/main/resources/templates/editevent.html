@@ -25,11 +25,17 @@
 						</div>
 					</div>
 					<div class="col-auto my-1">
-					  	<label class="mr-sm-2 ">Date</label>
+					  	<label class="mr-sm-2 ">Starting Date</label>
 						<div class="col-sm-10">
-							<input class="form-control" type="date" th:field="*{date}" />
+							<input class="form-control" type="date" th:field="*{startDate}" />
 						</div>
 					</div>
+					<div class="col-auto my-1">
+						<label class="mr-sm-2 ">End Date</label>
+					  <div class="col-sm-10">
+						  <input class="form-control" type="date" th:field="*{endDate}" />
+					  </div>
+				  </div>
 					<div class="col-auto my-1">
 						<label class="mr-sm-2">Description</label>
 						<div class="col-sm-10">
@@ -42,19 +48,25 @@
 							<input class="form-control" type="number" min="0.00" step="any" th:field="*{price}" />
 						</div>
 					</div>
-				<!--<div class="col-auto my-1">
+					<div class="col-auto my-1">
+						<label class="mr-sm-2">Address</label>
+						<div class="col-sm-10">
+							<input class="form-control" type="text" th:field="*{streetAddress}" />
+						</div>
+					  </div>
+					<div class="col-auto my-1">
 						<label class="mr-sm-2">Category</label>
 						<select class="form-control col-sm-10" id="categories" th:field="*{category}" >
-							   <option th:each="category: ${categories}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
+							   <option th:each="category: ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
 						</select>
 					</div>
 					<div class="col-auto my-1">
 						<label class="mr-sm-2">Location</label>
 							<select class="form-control col-sm-10" id="locations" th:field="*{location}" >
-	       						<option th:each="location: ${locations}" th:value="${location.locationId}" th:text="${location.city} + ' ' + ${location.zipcode}"></option>
+	       						<option th:each="location: ${locations}" th:value	="${location.locationId}" th:text="${location.city} + ' ' + ${location.zipcode}"></option>
 	    					</select>
 			   		</div><br>
-				-->
+									
 				<div class="form-group align-center" >
 					<input type="submit" class="btn btn-success" value="Save"></input>
 					<a class="btn btn-secondary" href="/eventlist" role="button">Back to eventlist</a>

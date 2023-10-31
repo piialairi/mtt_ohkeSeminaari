@@ -13,29 +13,102 @@
     <div class="container">
         <h1 class="mt-5">Event List</h1>
 
+        <div class="form-inline">
+            <input type="text" id="searchInputName" class="form-control" placeholder="Search by event name">
+            <button id="searchButtonName" class="btn btn-primary" style="margin: 10px;">Search</button>
+            <input type="text" id="searchInputCity" class="form-control" placeholder="Search by city">
+            <button id="searchButtonCity" class="btn btn-primary" style="margin: 10px;">Search</button>
+        </div>
+
         <table class="table mt-4">
             <thead class="thead-dark">
                 <tr>
                     <th>Event ID</th>
                     <th>Event Name</th>
-                    <th>Date</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                     <th>Description</th>
                     <th>Price</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Category</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="eventTableBody">
                 <tr th:each="event : ${events}">
                     <td th:text="${event.eventId}"></td>
                     <td th:text="${event.eventName}"></td>
-                    <td th:text="${#dates.format(event.date, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${event.startDate}"></td>
+                    <td th:text="${event.endDate}"></td>
                     <td th:text="${event.description}"></td>
                     <td th:text="${event.price}"></td>
-                    <td><a class="btn btn-light" th:href="@{editEvent/{id}(id=${event.eventId})}">Edit</a></td>
+                    <td th:text="${event.streetAddress}"></td>
+                    <td>
+                        <span 
+                        th:if="${event.location != null}"
+                        th:text="${event.location.city}">
+                        </span>
+                    </td>
+                    <td>
+                        <span th:if="${event.category != null}"
+                        th:text="${event.category.categoryName}"></span>
+                    </td>
+                    
+                    <td>
+                        <form th:action="@{/deleteEvent/{eventId}(eventId=${event.eventId})}" method="get"
+                            onsubmit="return confirm('Are you sure you want to delete this event?')">
+                            <button type="submit" class="btn btn-danger" style="margin: 10px;">Delete</button>
+                        </form>
+
+                        <form th:action="@{/editEvent/{eventId}(eventId=${event.eventId})}" method="get">
+                            <button type="submit" class="btn btn-primary" style="margin: 10px;">Edit</button>
+                        </form>
+                    </td>
                 </tr>
+
             </tbody>
         </table>
+        <a href="/addEvent" class="btn btn-primary" style="margin: 10px;">Add event</a>
+        <a href="/locationlist" class="btn btn-primary" style="margin: 10px;">Location list</a>
+        <a href="/categorylist" class="btn btn-primary" style="margin: 10px;">Category list</a>
     </div>
-</body>
 
+</body>
+<script>
+    document.getElementById("searchButtonName").addEventListener("click", function () {
+        var searchTerm = document.getElementById("searchInputName").value.toLowerCase();
+        var tableBody = document.getElementById("eventTableBody");
+        var eventRows = tableBody.getElementsByTagName("tr");
+
+        for (var i = 0; i < eventRows.length; i++) {
+            var eventNameCell = eventRows[i].getElementsByTagName("td")[1];
+            if (eventNameCell) {
+                var eventName = eventNameCell.textContent.toLowerCase();
+                if (eventName.includes(searchTerm)) {
+                    eventRows[i].style.display = "";
+                } else {
+                    eventRows[i].style.display = "none";
+                }
+            } 
+        }
+    });
+    document.getElementById("searchButtonCity").addEventListener("click", function () {
+        var searchTerm = document.getElementById("searchInputCity").value.toLowerCase();
+        var tableBody = document.getElementById("eventTableBody");
+        var eventRows = tableBody.getElementsByTagName("tr");
+
+        for (var i = 0; i < eventRows.length; i++) {
+            var eventCityCell = eventRows[i].getElementsByTagName("td")[7];
+            if (eventCityCell) {
+                var city = eventCityCell.textContent.toLowerCase();
+                if (city.includes(searchTerm)) {
+                    eventRows[i].style.display = "";
+                } else {
+                    eventRows[i].style.display = "none";
+                }
+            }
+        }
+    });
+</script>
 </html>
