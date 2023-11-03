@@ -28,34 +28,64 @@ function FrontPage() {
       });
   };
 
-  const handleSearch = (searchTerm) => {
+  const searchByEventName = (keyword) => {
     const filtered = events.filter((event) =>
-      event.eventName.toLowerCase().includes(searchTerm.toLowerCase())
+      event.eventName.toLowerCase().includes(keyword.toLowerCase())
     );
     setFilteredEvents(filtered);
   };
 
-  const searchCity = (keyword) => {
+  const searchByCity = (keyword) => {
     const filtered = events.filter((event) =>
       event.location.city.toLowerCase().includes(keyword.toLowerCase())
     );
     setFilteredEvents(filtered);
   };
 
+  const searchByCategory = (keyword) => {
+    const filtered = events.filter((event) =>
+      event.category.categoryName.toLowerCase().includes(keyword.toLowerCase())
+    );
+    setFilteredEvents(filtered);
+  };
+
+  const searchByDate = (keyword) => {
+    if (!keyword) {
+      setFilteredEvents(events); // Näytä kaikki tapahtumat, jos filtteriarvo on tyhjä
+    } else {
+      const filtered = events.filter((event) => {
+        const startDate = new Date(event.startDate); // Olettaen että event.startDate on muotoa "yyyy-MM-dd"
+        const searchDate = new Date(keyword); // Olettaen että keyword on muotoa "yyyy-MM-dd"
+        return startDate.toISOString().includes(searchDate.toISOString());
+      });
+      setFilteredEvents(filtered);
+    }
+  };
+
 
   return (
     <Paper sx={{ width: "100%" }}>
       <Weather />
-      <Box>
+      <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 1 }}>
         <TextField
           type="text"
           placeholder="Search by event name"
-          onChange={(e) => handleSearch(e.target.value)}
+          onChange={(e) => searchByEventName(e.target.value)}
         />
         <TextField
           type="text"
           placeholder="Search by city"
-          onChange={(e) => searchCity(e.target.value)}
+          onChange={(e) => searchByCity(e.target.value)}
+        />
+        <TextField
+          type="text"
+          placeholder="Search by category"
+          onChange={(e) => searchByCategory(e.target.value)}
+        />
+        <TextField
+          type="text"
+          placeholder="Search by date"
+          onChange={(e) => searchByDate(e.target.value)}
         />
       </Box>
       <Typography variant="h5">All events</Typography>
