@@ -9,7 +9,7 @@ import CardMedia from "@mui/material/CardMedia";
 
 function Weather() {
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
-  const [cityWeather, setCityWeather] = useState({});
+  const [cityWeather, setCityWeather] = useState(null);
   const [selectedCity, setSelectedCity] = useState("Helsinki");
 
   const fetchWeatherData = (city, setWeather) => {
@@ -17,7 +17,10 @@ function Weather() {
       `http://api.openweathermap.org/data/2.5/weather?lang=fi&q=${city}&units=metric&APPID=${apiKey}`
     )
       .then((response) => response.json())
-      .then((data) => setWeather(data))
+      .then((data) => {
+        setWeather(data);
+        setSelectedCity("Helsinki")
+      })
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -28,9 +31,9 @@ function Weather() {
   }, []);
 
   const renderWeatherInfo = (weather) => {
-    if (weather.name) {
+    if (weather) {
       return (
-        <Card sx={{ display: "flex" }}>
+        <Card sx={{ display: "flex", p:2  }}>
           <CardMedia
             component="img"
             sx={{ height: 100, width: 100 }}
@@ -42,7 +45,7 @@ function Weather() {
               {weather.name}
             </Typography>
             <Typography component="div" variant="subtitle1">
-              {weather.main.temp}&#8451;
+              {weather.main.temp > 0 ? `+${weather.main.temp.toFixed(1)}`:`${weather.main.temp.toFixed(1)}`} &#8451;
             </Typography>
           </CardContent>
         </Card>
@@ -53,23 +56,28 @@ function Weather() {
   };
 
   return (
-    <Box sx={{ ml: 10, mr: 10, mt: 1, mb: 1, backgroundColor: "lightgray" }}>
-      <Stack direction="row" spacing={2}>
-        <Box>{renderWeatherInfo(cityWeather)}</Box>
+    <Box sx={{ display:'flex', justifyContent:'center'}}>
+      <Stack backgroundColor="lightgray" p={2} direction="row" spacing={2} m={3}>
         <Box>
+          {renderWeatherInfo(cityWeather)}
+        </Box>
+        <Stack direction='column' spacing={0}>
           <TextField
-            placeholder="Another city"
-            value={selectedCity}
+            label="Another city"
+            margin='normal'
+            variant='filled'
+            value={selectedCity === "Helsinki"?"":selectedCity}
             onChange={(event) => setSelectedCity(event.target.value)}
           />
           <IconButton
             aria-label="search"
-            size="large"
+            size='large'
+            color='primary'
             onClick={() => fetchWeatherData(selectedCity, setCityWeather)}
           >
-            <SearchSharpIcon fontSize="inherit" />
+            <SearchSharpIcon fontSize='inherit' />
           </IconButton>
-        </Box>
+        </Stack>
       </Stack>
     </Box>
   );
