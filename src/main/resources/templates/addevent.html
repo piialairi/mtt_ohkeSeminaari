@@ -20,7 +20,7 @@
 			<h1>New event</h1>
 		</div>
 		<div>
-			<form th:object="${newevent}" th:action="@{/saveEvent}" action="#" method="post">
+			<form th:object="${newevent}" th:action="@{/saveEvent}"  method="post">
 				<div class="col-auto my-1">
 					<label class="mr-sm-2">Name</label>
 					<div th:if="${#fields.hasErrors('eventName')}" th:errors="*{eventName}">Error</div>
@@ -142,9 +142,21 @@
 						zipcode: zipcode
 					},
 					success: function (response) {
-						//if successful add information to location dropdown menu and hide modal
-						$("#locations").append(new Option(city + ' ' + zipcode, response.locationId, true, true));
+						//if successful add information to location dropdown menu and hide 
+						console.log(response)
+						
 						$("#addLocationModal").modal('hide');
+						
+						fetch("http://localhost:8080/locations")
+						.then(data => data.json())
+						.then(locations=> {
+							$("#locations").html("")
+							for (let location of locations){
+								$("#locations").append(new Option(location.city + ' ' + location.zipcode, location.locationId, true, true));
+							}
+						})
+
+						 
 					},
 					error: function (error) {
 						
