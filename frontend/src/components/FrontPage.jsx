@@ -10,10 +10,17 @@ import { Typography, TextField } from "@mui/material";
 import Weather from "./Weather";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 function FrontPage() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
 
   useEffect(() => {
     fetchEvents();
@@ -26,6 +33,13 @@ function FrontPage() {
         setEvents(data);
         setFilteredEvents(data); // Aseta suodatetut tapahtumat alkuperäisiksi
       });
+  };
+  const handleDrawerOpen = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setIsDrawerOpen(false);
   };
 
   const searchByEventName = (keyword) => {
@@ -62,31 +76,50 @@ function FrontPage() {
     }
   };
 
-
   return (
     <Paper sx={{ width: "100%" }}>
       <Weather />
-      <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 1 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <TextField
           type="text"
           placeholder="Search by event name"
           onChange={(e) => searchByEventName(e.target.value)}
         />
-        <TextField
-          type="text"
-          placeholder="Search by city"
-          onChange={(e) => searchByCity(e.target.value)}
-        />
-        <TextField
-          type="text"
-          placeholder="Search by category"
-          onChange={(e) => searchByCategory(e.target.value)}
-        />
-        <TextField
-          type="text"
-          placeholder="Search by date"
-          onChange={(e) => searchByDate(e.target.value)}
-        />
+        <IconButton onClick={handleDrawerOpen}>
+          <MenuIcon fontSize="medium" />
+        </IconButton>
+        <Drawer
+          anchor="right"
+          open={isDrawerOpen}
+          onClose={handleDrawerClose}
+        >
+          <Box
+            sx={{ width: 250 }}
+            role="presentation"
+          >
+            <Typography variant="h6">Filter by:</Typography>
+            <TextField
+              type="text"
+              placeholder="City"
+              onChange={(e) => searchByCity(e.target.value)}
+            />
+            <TextField
+              type="text"
+              placeholder="Category"
+              onChange={(e) => searchByCategory(e.target.value)}
+            />
+            <TextField
+              type="date"
+              placeholder="Date"
+              onChange={(e) => searchByDate(e.target.value)}
+            />
+            <Box>
+              <IconButton onClick={handleDrawerClose}>
+                <CloseIcon fontSize="medium" />
+              </IconButton>
+            </Box>
+          </Box>
+        </Drawer>
       </Box>
       <Typography variant="h5">All events</Typography>
       <TableContainer sx={{ maxHeight: 440 }}>
