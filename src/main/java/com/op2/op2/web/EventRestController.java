@@ -61,13 +61,12 @@ public class EventRestController {
         }
     }
 
-    @DeleteMapping({ "/events/{id}" })
-    void deleteEvent(@PathVariable("id") Long eventId) {
-        log.info("Event id has been deleted: " + eventId);
-        try {
+    @DeleteMapping({"/events/delete/{id}"})
+    void deleteEvent(@PathVariable Long eventId) {
+        try{
             eventRepository.deleteById(eventId);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find event with id " + eventId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         }
     }
 }
