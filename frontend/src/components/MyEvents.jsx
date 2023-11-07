@@ -13,7 +13,8 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from "@mui/material/IconButton";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+//import { deleteEvent } from '../services/EventService';
+import axios from 'axios';
 
 function MyEvents() {
     const [events, setEvents] = useState([]);
@@ -31,11 +32,14 @@ function MyEvents() {
       });
     };
 
-    const deleteEvent = async (eventId) => {
+    const handleDeleteEvent = async (eventId) => {
         try { 
-            await deleteEvent(eventId)
+            await axios.delete(`http://localhost:8080/events/delete/${eventId}`)
+            fetchEvents();
+//            await deleteEvent(eventId)
+//            window.location.reload();
         }
-        catch{console.error(`Couldn't delete event id:${eventId}`);}
+        catch(error){console.error(`Couldn't delete event id:${eventId}`);}
     }
     
     return (
@@ -76,7 +80,7 @@ function MyEvents() {
                                     </CardContent>  
                                     <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
                                         <IconButton component={Link} to={'/edit/' + event.eventId + '/'+event.eventName }><EditIcon /></IconButton>
-                                        <IconButton onClick={() => deleteEvent(event.eventId)}><DeleteIcon/></IconButton>
+                                        <IconButton onClick={() => handleDeleteEvent(event.eventId)}><DeleteIcon/></IconButton>
                                     </CardActions>
                                 </Card>
                             </Grid>
