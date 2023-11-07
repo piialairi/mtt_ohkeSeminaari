@@ -77,16 +77,13 @@ public class LocationRestController {
         }
     }
 
-    @PutMapping({ "locations/{id} "})
-    //@ResponseStatus(HttpStatus.CREATED)
+    @PutMapping({ "/locations/{id}" })
+    @ResponseStatus(HttpStatus.CREATED)
     public Location updateLocation(@RequestBody Location updatedLocation, @PathVariable("id") Long locationId) {
         log.info("Edited location " + updatedLocation.toString());
-        List<Location> locations = locationRepo.findByLocationId(locationId);
-        if (locations.size()==0){
+        Optional<Location> location = locationRepo.findById(locationId);
+        if (location.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find location");
-        }
-        if (updatedLocation.getLocationId()!=locationId){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Flawed requests. Ids do not match");
         }
         try{
             updatedLocation.setLocationId(locationId);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -82,6 +83,21 @@ public class CategoryRestController {
                 event.setCategory(null);
             }
             categoryRepo.delete(category);
+        }
+    }
+
+    @PutMapping({ "/categories/{name}" })
+    @ResponseStatus(HttpStatus.CREATED)
+    public Category updateCategory(@RequestBody Category updatedCategory, @PathVariable("name") String categoryName){
+        List<Category> category = categoryRepo.findByCategoryName(categoryName);
+        if (category.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Could not find category");
+        }
+        try{
+            updatedCategory.setCategoryName(categoryName);
+            return categoryRepo.save(updatedCategory);
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,"Could not accept");
         }
     }
     
