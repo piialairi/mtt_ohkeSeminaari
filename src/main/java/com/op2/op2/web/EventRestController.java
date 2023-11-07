@@ -56,7 +56,7 @@ public class EventRestController {
         return eventRepository.save(event);
     }
     
-    @DeleteMapping({"/events/delete/{id}"})
+    @DeleteMapping({"/events/delete/{eventId}"})
     void deleteEvent(@PathVariable Long eventId) {
         try{
             eventRepository.deleteById(eventId);
