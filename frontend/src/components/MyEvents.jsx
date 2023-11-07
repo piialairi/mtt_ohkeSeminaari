@@ -13,8 +13,7 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from "@mui/material/IconButton";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-//import { deleteEvent } from '../services/EventService';
-import axios from 'axios';
+import { deleteEvent } from '../services/EventService';
 
 function MyEvents() {
     const [events, setEvents] = useState([]);
@@ -33,11 +32,9 @@ function MyEvents() {
     };
 
     const handleDeleteEvent = async (eventId) => {
-        try { 
-            await axios.delete(`http://localhost:8080/events/delete/${eventId}`)
+        try {
+            await deleteEvent(eventId)
             fetchEvents();
-//            await deleteEvent(eventId)
-//            window.location.reload();
         }
         catch(error){console.error(`Couldn't delete event id:${eventId}`);}
     }
