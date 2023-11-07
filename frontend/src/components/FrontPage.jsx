@@ -24,6 +24,7 @@ function FrontPage() {
 
   useEffect(() => {
     fetchEvents();
+    fetchEventDataFromApi();
   }, []);
 
   const fetchEvents = () => {
@@ -34,6 +35,31 @@ function FrontPage() {
         setFilteredEvents(data); // Aseta suodatetut tapahtumat alkuperäisiksi
       });
   };
+
+  const fetchEventDataFromApi = () => {
+    fetch("https://api.hel.fi/linkedevents/v1/event/?start=now&end=today") //    fetch("https://api.hel.fi/linkedevents/v1/event/?all_ongoing")
+      .then((response) => response.json())
+      .then((apiData) => {
+        if (apiData.data && apiData.data.length > 0) {
+          const apiEvents = apiData.data.map((eventData) => {
+            return {
+              eventName: eventData.name.fi,
+              startDate: eventData.start_time,
+              endDate: eventData.end_time,
+              description: eventData.description.fi,
+              location: { city: "Hesa", },  //väliaikainen ratkaisu
+              category: {categoryName: "Ei tietoa"} //väliaikainen ratkaisu
+          }
+          })
+          const combinedEvents = [...events, ...apiEvents]; 
+          setEvents(combinedEvents)
+          setFilteredEvents(combinedEvents);
+      }
+      })
+      .catch((error) => {
+        console.error('Couldnt fetch data: ', error);
+    })
+  }
   const handleDrawerOpen = () => {
     setIsDrawerOpen(true);
   };
@@ -44,21 +70,21 @@ function FrontPage() {
 
   const searchByEventName = (keyword) => {
     const filtered = events.filter((event) =>
-      event.eventName.toLowerCase().includes(keyword.toLowerCase())
+      event.eventName && event.eventName.toLowerCase().includes(keyword.toLowerCase())
     );
     setFilteredEvents(filtered);
   };
 
   const searchByCity = (keyword) => {
     const filtered = events.filter((event) =>
-      event.location.city.toLowerCase().includes(keyword.toLowerCase())
+      event.location?.city?.toLowerCase().includes(keyword.toLowerCase())
     );
     setFilteredEvents(filtered);
   };
 
   const searchByCategory = (keyword) => {
     const filtered = events.filter((event) =>
-      event.category.categoryName.toLowerCase().includes(keyword.toLowerCase())
+      event.category?.categoryName?.toLowerCase().includes(keyword.toLowerCase())
     );
     setFilteredEvents(filtered);
   };
@@ -75,6 +101,8 @@ function FrontPage() {
       setFilteredEvents(filtered);
     }
   };
+
+
 
   return (
     <Paper sx={{ width: "100%" }}>
