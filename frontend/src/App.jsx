@@ -5,6 +5,7 @@ import TabMUI from './navigation/TabMUI';
 import FrontPage from './components/FrontPage';
 import MyEvents from './components/MyEvents';
 import LoginPage from './components/Login';
+import EventDetail from './components/EventDetails';
 
 function App() {
   
@@ -28,6 +29,7 @@ function App() {
           <Route index element={<FrontPage/>}/>
           <Route path='myevents' element={<MyEvents />} />      
           <Route path='login' element={<LoginPage />} /> 
+          <Route path='event/:eventId' element={<EventDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>

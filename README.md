@@ -32,10 +32,13 @@ Käyttäjien lisäämien tapahtumien lisäksi sovellukseen haetaan tapahtumia my
 - Hyödynnämme avointa dataa muun muassa säätietojen, tapahtumien ja paikkojen hakemiseen.
 - Päätelaitteet sovelluksen käyttöön: tietokone, tabletti, älypuhelin
 
-#### Tärkeää:
+#### Ympäristömuuttujat:
+
+#### _-Backend:_
+
 Tämän projektin kehitysvaiheessa jokaisella kehittäjällä on oma H2-tietokanta omalla koneellaan. Tietokannan nimi, käyttäjätunnus ja salasana ovat salattuja *env.properties*-tiedostossa eikä sitä näy tässä repositoriossa. Nämä tiedot ovat välttämättömiä sovelluksen oikean toiminnan kannalta. Seuraavaksi on ohjeet tarvittaviin muutoksiin:
 
-*1.* Luo **env.properties**-niminen tiedosto projektin *src/main/resources*-kansiossa.
+*1.* Luo **env.properties**-niminen tiedosto projektin *src/main/resources*-kansioon.
 
 *2.* Jotta varmistat, että *env.properties*-tiedosto pysyy salaisena ja vältät sen vahingossa lisäämisen versionhallintaan, lisää sen nimi **.gitignore**-tiedostoon.
 ```
@@ -57,6 +60,26 @@ spring.datasource.username=${DB_USER}
 spring.datasource.password=${DB_PASSWORD}
 ```
 
+#### _-Frontend:_
+
+Sovellus käyttää OpenWeatherMap-palvelua säätietojen hakemiseen. Tämän takia tarvitaan API-avainta, joka toimii todentamistiedostona sovelluksen ja OpenWeatherMapin välillä. API-avain mahdollistaa sovelluksen saada reaaliaikaisia säätietoja eri kaupungeista.
+
+*1.* Luo **.env**-niminen tiedosto projektin *frontend*-kansioon.
+
+*2.* Lisää *.env*-tiedoston nimi **_frontend_**-kansion **.gitignore**-tiedostoon.
+```
+.env
+```
+
+*3.* Muokkaa **.env**-tiedostoa ja tallenna siihen OpenWeatherMapin API-avain: 
+```
+VITE_WEATHER_API_KEY=your_api_key
+```
+
+Sovelluksen *frontend/src/components*-kansiossa **Weather.jsx**-tiedossa oleva _Weather_-komponentti käyttää **.env**-tiedostossa määriteltyä API-avaita:
+```
+const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+```
 ### Swagger-UI 
 REST-dokumentaatio löytyy osoitteesta:
 http://localhost:8080/swagger-ui/index.html
