@@ -60,8 +60,8 @@ function MyEvents() {
                                     <CardContent sx={{ display: 'flex', justifyContent: 'center' }} title={event.startDate}>
                                         <Avatar
                                             sx={{ width: 100, height: 100 }}
-                                            alt={event.category.categoryName[0]}
-                                            src="/broken-image.jpg"
+                                            alt='Category name'
+                                            src={event.category.categoryName[0]}
                                         />
                                     </CardContent>
                                     <Divider variant="fullWidth"></Divider>
