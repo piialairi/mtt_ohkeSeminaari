@@ -7,7 +7,6 @@ import MyEvents from './components/MyEvents';
 import LoginPage from './components/Login';
 import EventDetails from './components/EventDetails';
 import AddEvent from './components/AddEvent';
-import EditEvent from './components/EditEvent';
 
 
 function App() {
@@ -34,7 +33,6 @@ function App() {
           <Route path='login' element={<LoginPage />} /> 
           <Route path='event/:eventId' element={<EventDetails />} />
           <Route path='addevent' element={<AddEvent />} />
-          <Route path='editevent/:eventId' element={<EditEvent />} />
         </Route> 
       </Routes>
     </BrowserRouter>
