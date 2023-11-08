@@ -14,7 +14,7 @@ function AddEvent() {
     price: "",
     streetAddress: "",
     location: {
-        locationId: 0, 
+        locationId: "", 
         zipcode: "",
         city: "",
       },
@@ -138,7 +138,7 @@ function AddEvent() {
         <InputLabel>Location</InputLabel>
         <Select
             name="location"
-            value={event.location}
+            defaultValue=''
             onChange={handleInputChange}
         >
             <MenuItem value="">Select a location</MenuItem>
@@ -155,7 +155,7 @@ function AddEvent() {
         <InputLabel>Category</InputLabel>
         <Select
             name="category"
-            value={event.category}
+            defaultValue=''
             onChange={handleInputChange}
         >
             <MenuItem value="">Select a category</MenuItem>
