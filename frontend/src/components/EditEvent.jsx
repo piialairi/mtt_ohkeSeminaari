@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { TextField, Select, MenuItem, Button, FormControl, InputLabel } from "@mui/material";
 
-function EditEvent({ match }) {
+function EditEvent() {
+    const navigate = useNavigate();
     const { eventId } = useParams();
 
   const [event, setEvent] = useState({
@@ -13,8 +14,15 @@ function EditEvent({ match }) {
     description: "",
     price: "",
     streetAddress: "",
-    location: "",
-    category: "",
+    location: {
+        locationId: 0, 
+        zipcode: "",
+        city: "",
+      },
+      category: {
+        categoryName: "",
+        description: "",
+      },
   });
 
   const [locations, setLocations] = useState([]);
@@ -37,6 +45,7 @@ function EditEvent({ match }) {
           location: eventData.location.locationId, // Assuming you want to set locationId
           category: eventData.category.categoryName, // Assuming you want to set categoryName
         });
+
       })
       .catch((error) => {
         console.error("Error fetching event data: ", error);
@@ -75,6 +84,7 @@ function EditEvent({ match }) {
       // Send a PUT request to update the event data
       await axios.put(`http://localhost:8080/events/${eventId}`, event);
       console.log("Event updated successfully");
+      navigate("/myEvents");
     } catch (error) {
       console.error("Error updating event:", error);
     }
@@ -148,13 +158,13 @@ function EditEvent({ match }) {
             <InputLabel>Location</InputLabel>
             <Select
                 name="location"
-                value={event.location}
+                defaultValue=''
                 onChange={handleInputChange}
             >
                 <MenuItem value="">Select a location</MenuItem>
                 {locations.map((location) => (
                 <MenuItem key={location.locationId} value={location}>
-                    {location.city} 
+                    {location.city} {" "}
                     {location.zipcode}
                 </MenuItem>
                 ))}
@@ -165,7 +175,7 @@ function EditEvent({ match }) {
             <InputLabel>Category</InputLabel>
             <Select
                 name="category"
-                value={event.category}
+                defaultValue=''
                 onChange={handleInputChange}
             >
                 <MenuItem value="">Select a category</MenuItem>
