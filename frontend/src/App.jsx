@@ -6,6 +6,8 @@ import FrontPage from './components/FrontPage';
 import MyEvents from './components/MyEvents';
 import LoginPage from './components/Login';
 import EventDetails from './components/EventDetails';
+import AddEvent from './components/AddEvent';
+
 
 function App() {
   
@@ -30,7 +32,8 @@ function App() {
           <Route path='myevents' element={<MyEvents />} />      
           <Route path='login' element={<LoginPage />} /> 
           <Route path='event/:eventId' element={<EventDetails />} />
-        </Route>
+          <Route path='addevent' element={<AddEvent />} />
+        </Route> 
       </Routes>
     </BrowserRouter>
   )

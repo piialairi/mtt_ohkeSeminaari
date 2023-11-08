@@ -46,7 +46,7 @@ function MyEvents() {
 
                 <Box sx={{ display: 'flex', justifyContent: 'center', padding: 10 }}>
                     <Button          
-                        component={Link} to='/addEvent'
+                        component={Link} to='/addevent'
                         variant='contained'
                         sx={{ marginRight: 3 }}
                     >Create new event</Button>
@@ -76,7 +76,7 @@ function MyEvents() {
                                         <Typography><b>Category:</b> {event.category.categoryName}</Typography>
                                     </CardContent>  
                                     <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-                                        <IconButton component={Link} to={'/edit/' + event.eventId + '/'+event.eventName }><EditIcon /></IconButton>
+                                        <IconButton component={Link} to={'/edit/' + event.eventId }><EditIcon /></IconButton>
                                         <IconButton onClick={() => handleDeleteEvent(event.eventId)}><DeleteIcon/></IconButton>
                                     </CardActions>
                                 </Card>
