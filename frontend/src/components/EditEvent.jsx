@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { TextField, Select, MenuItem, Button, FormControl, InputLabel } from "@mui/material";
 
 function EditEvent() {
+    const navigate = useNavigate();
     const { eventId } = useParams();
 
   const [event, setEvent] = useState({
@@ -13,21 +14,27 @@ function EditEvent() {
     description: "",
     price: "",
     streetAddress: "",
-    location: "",
-    category: "",
+    location: {
+        locationId: 0, 
+        zipcode: "",
+        city: "",
+      },
+      category: {
+        categoryName: "",
+        description: "",
+      },
   });
 
   const [locations, setLocations] = useState([]);
   const [categories, setCategories] = useState([]);
-  
 
   useEffect(() => {
-    
+    // Fetch event data for editing
     axios.get(`http://localhost:8080/events/${eventId}`)
       .then((response) => {
         const eventData = response.data;
 
-        
+        // Update the event state with the fetched data
         setEvent({
           eventName: eventData.eventName,
           startDate: eventData.startDate,
@@ -35,15 +42,16 @@ function EditEvent() {
           description: eventData.description,
           price: eventData.price,
           streetAddress: eventData.streetAddress,
-          location: eventData.location, 
-          category: eventData.category, 
+          location: eventData.location.locationId, // Assuming you want to set locationId
+          category: eventData.category.categoryName, // Assuming you want to set categoryName
         });
+
       })
       .catch((error) => {
         console.error("Error fetching event data: ", error);
       });
 
-    
+    // Fetch location and category data for dropdowns
     axios.get("http://localhost:8080/locations")
       .then((response) => {
         setLocations(response.data);
@@ -73,9 +81,10 @@ function EditEvent() {
     e.preventDefault();
 
     try {
-      
+      // Send a PUT request to update the event data
       await axios.put(`http://localhost:8080/events/${eventId}`, event);
       console.log("Event updated successfully");
+      navigate("/myEvents");
     } catch (error) {
       console.error("Error updating event:", error);
     }
@@ -149,13 +158,13 @@ function EditEvent() {
             <InputLabel>Location</InputLabel>
             <Select
                 name="location"
-                value={event.location}
+                defaultValue=''
                 onChange={handleInputChange}
             >
                 <MenuItem value="">Select a location</MenuItem>
                 {locations.map((location) => (
                 <MenuItem key={location.locationId} value={location}>
-                    {location.city} 
+                    {location.city} {" "}
                     {location.zipcode}
                 </MenuItem>
                 ))}
@@ -166,7 +175,7 @@ function EditEvent() {
             <InputLabel>Category</InputLabel>
             <Select
                 name="category"
-                value={event.category}
+                defaultValue=''
                 onChange={handleInputChange}
             >
                 <MenuItem value="">Select a category</MenuItem>
