@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { TextField, Select, MenuItem, Button, FormControl, InputLabel } from "@mui/material";
 
-function EditEvent({ match }) {
+function EditEvent() {
     const { eventId } = useParams();
 
   const [event, setEvent] = useState({
@@ -35,8 +35,8 @@ function EditEvent({ match }) {
           description: eventData.description,
           price: eventData.price,
           streetAddress: eventData.streetAddress,
-          location: eventData.location.locationId, 
-          category: eventData.category.categoryName, 
+          location: eventData.location, 
+          category: eventData.category, 
         });
       })
       .catch((error) => {
@@ -72,10 +72,10 @@ function EditEvent({ match }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {      
+    try {
+      
       await axios.put(`http://localhost:8080/events/${eventId}`, event);
       console.log("Event updated successfully");
-      window.location.replace("/myevents")
     } catch (error) {
       console.error("Error updating event:", error);
     }
