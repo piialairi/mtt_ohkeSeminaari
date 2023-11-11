@@ -22,50 +22,66 @@ function FrontPage() {
 
 
   useEffect(() => {
-    fetchEvents();
+    fetchDBevents();
     fetchHelsinkiEventDataFromApi();
     fetchEspooEventDataFromApi();
   }, []);
 
-  const fetchEvents = () => {
+  //tapahtumahaku tietokannasta:
+  const fetchDBevents = () => {
     fetch("http://localhost:8080/events")
       .then((response) => response.json())
       .then((data) => {
         if (data && data.length > 0) {
-          const dbEvents = data.map((event) => {
-            return {
+          const dbEvents = data.map((event) => ({
               eventId: event.eventId,
               eventName: event.eventName,
               startDate: event.startDate,
               endDate: event.endDate,
-              price:event.price,
+              price:event.price + " €",
               description: event.description,
               location: event.location,
               category: event.category,
-            }
-          })
+          }))
           console.log('Events from H2: ', dbEvents);
-          setEvents(()=>[...dbEvents]);
-          setFilteredEvents(()=>[...dbEvents]); // Aseta suodatetut tapahtumat alkuperäisiksi
+          setEvents([...dbEvents]);
+          setFilteredEvents([...dbEvents]); // Aseta suodatetut tapahtumat alkuperäisiksi
         }
-        });
+      });
   };
 
+  //api-rajapinnasta tulleen aikamuodon formattointi:
+  const formatDateTime = (dateTimeString) => {
+    return new Date(dateTimeString).toLocaleDateString('fi-FI', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    });
+  };
+
+  //tapahtumahaku avoimesta rajapinnasta:
   const fetchHelsinkiEventDataFromApi = () => {
-    fetch("https://api.hel.fi/linkedevents/v1/event/?start=now&end=today ") //    fetch("https://api.hel.fi/linkedevents/v1/event/?all_ongoing")
+    fetch("https://api.hel.fi/linkedevents/v1/event/?start=now&end=today") //    fetch("https://api.hel.fi/linkedevents/v1/event/?all_ongoing")
       .then((response) => response.json())
       .then((apiData) => {
+        console.log('Events from HelsinkiAPIdata: ', apiData);
         if (apiData.data && apiData.data.length > 0) {
           const apiHelsinkiEvents = apiData.data.map((eventData) => {
+            const formattedStartDate = formatDateTime(eventData.start_time);
+            const formattedEndDate = formatDateTime(eventData.end_time);
             return {
               eventName: eventData.name.fi,
-              startDate: eventData.start_time,
-              endDate: eventData.end_time,
-              description: eventData.description.fi,
+              startDate: formattedStartDate,
+              endDate: formattedEndDate,
+              price: 0+" €",   //offers.is_free(true/false) / price(null/string)
+              description: eventData.description.fi, //short_description vai molemmat?
               location: { city: "Hesa", },  //väliaikainen ratkaisu
               category: {categoryName: "Ei tietoa"} //väliaikainen ratkaisu
           }
           })
+          console.log('Events from HelsinkiAPI: ', apiHelsinkiEvents);
           setEvents((prevEvents)=>[...prevEvents, ...apiHelsinkiEvents])
           setFilteredEvents((prevEvents)=>[...prevEvents, ...apiHelsinkiEvents]);
       }
@@ -81,15 +97,19 @@ function FrontPage() {
       .then((apiData) => {
         if (apiData.data && apiData.data.length > 0) {
           const apiEspooEvents = apiData.data.map((eventData) => {
+            const formattedStartDate = formatDateTime(eventData.start_time);
+            const formattedEndDate = formatDateTime(eventData.end_time);
             return {
               eventName: eventData.name.fi,
-              startDate: eventData.start_time,
-              endDate: eventData.end_time,
-              description: eventData.description.fi,
+              startDate: formattedStartDate,
+              endDate: formattedEndDate,
+              price: 0 +" €",   //offers.is_free(true/false) / price(null/string)
+              description: eventData.description.fi, //short_description vai molemmat?
               location: { city: "Espoo", },  //väliaikainen ratkaisu
               category: {categoryName: "Ei tietoa"} //väliaikainen ratkaisu
           }
           })
+          console.log('Events from EspooAPI: ', apiEspooEvents);
           setEvents((prevEvents)=>[...prevEvents, ...apiEspooEvents])
           setFilteredEvents((prevEvents)=>[...prevEvents, ...apiEspooEvents]);
       }
@@ -99,6 +119,7 @@ function FrontPage() {
     })
   }
 
+  //tapahtumalistan filtteröinti:
   const handleDrawerOpen = () => {
     setIsDrawerOpen(true);
   };
@@ -210,7 +231,7 @@ function FrontPage() {
                 </TableCell>
                 <TableCell align="right">{event.startDate}</TableCell>
                 <TableCell align="right">{event.endDate}</TableCell>
-                <TableCell align="right">{event.price} €</TableCell>
+                <TableCell align="right">{event.price}</TableCell>
                 <TableCell align="right">{event.location?.city||'N/A'}</TableCell>
                 <TableCell align="right">{event.category?.categoryName||'N/A'}</TableCell>
                 <TableCell align="right">
