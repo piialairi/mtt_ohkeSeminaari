@@ -24,24 +24,40 @@ function FrontPage() {
 
   useEffect(() => {
     fetchEvents();
-    fetchEventDataFromApi();
+    fetchHelsinkiEventDataFromApi();
+    fetchEspooEventDataFromApi();
   }, []);
 
   const fetchEvents = () => {
     fetch("http://localhost:8080/events")
       .then((response) => response.json())
       .then((data) => {
-        setEvents(data);
-        setFilteredEvents(data); // Aseta suodatetut tapahtumat alkuperäisiksi
-      });
+        if (data && data.length > 0) {
+          const dbEvents = data.map((event) => {
+            return {
+              eventId: event.eventId,
+              eventName: event.eventName,
+              startDate: event.startDate,
+              endDate: event.endDate,
+              price:event.price,
+              description: event.description,
+              location: event.location,
+              category: event.category,
+            }
+          })
+          console.log('Events from H2: ', dbEvents);
+          setEvents(()=>[...dbEvents]);
+          setFilteredEvents(()=>[...dbEvents]); // Aseta suodatetut tapahtumat alkuperäisiksi
+        }
+        });
   };
 
-  const fetchEventDataFromApi = () => {
-    fetch("https://api.hel.fi/linkedevents/v1/event/?start=now&end=today") //    fetch("https://api.hel.fi/linkedevents/v1/event/?all_ongoing")
+  const fetchHelsinkiEventDataFromApi = () => {
+    fetch("https://api.hel.fi/linkedevents/v1/event/?start=now&end=today ") //    fetch("https://api.hel.fi/linkedevents/v1/event/?all_ongoing")
       .then((response) => response.json())
       .then((apiData) => {
         if (apiData.data && apiData.data.length > 0) {
-          const apiEvents = apiData.data.map((eventData) => {
+          const apiHelsinkiEvents = apiData.data.map((eventData) => {
             return {
               eventName: eventData.name.fi,
               startDate: eventData.start_time,
@@ -51,15 +67,39 @@ function FrontPage() {
               category: {categoryName: "Ei tietoa"} //väliaikainen ratkaisu
           }
           })
-          const combinedEvents = [...events, ...apiEvents]; 
-          setEvents(combinedEvents)
-          setFilteredEvents(combinedEvents);
+          setEvents((prevEvents)=>[...prevEvents, ...apiHelsinkiEvents])
+          setFilteredEvents((prevEvents)=>[...prevEvents, ...apiHelsinkiEvents]);
       }
       })
       .catch((error) => {
         console.error('Couldnt fetch data: ', error);
     })
   }
+
+  const fetchEspooEventDataFromApi = () => {
+    fetch("http://api.espoo.fi/events/v1/event/")
+      .then((response) => response.json())
+      .then((apiData) => {
+        if (apiData.data && apiData.data.length > 0) {
+          const apiEspooEvents = apiData.data.map((eventData) => {
+            return {
+              eventName: eventData.name.fi,
+              startDate: eventData.start_time,
+              endDate: eventData.end_time,
+              description: eventData.description.fi,
+              location: { city: "Espoo", },  //väliaikainen ratkaisu
+              category: {categoryName: "Ei tietoa"} //väliaikainen ratkaisu
+          }
+          })
+          setEvents((prevEvents)=>[...prevEvents, ...apiEspooEvents])
+          setFilteredEvents((prevEvents)=>[...prevEvents, ...apiEspooEvents]);
+      }
+      })
+      .catch((error) => {
+        console.error('Couldnt fetch data: ', error);
+    })
+  }
+
   const handleDrawerOpen = () => {
     setIsDrawerOpen(true);
   };
@@ -155,11 +195,12 @@ function FrontPage() {
           <TableHead>
             <TableRow>
               <TableCell>Event name</TableCell>
-              <TableCell align="right">starts</TableCell>
-              <TableCell align="right">ends</TableCell>
+              <TableCell align="right">Starts</TableCell>
+              <TableCell align="right">Ends</TableCell>
               <TableCell align="right">Price</TableCell>
               <TableCell align="right">City</TableCell>
               <TableCell align="right">Category</TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -171,8 +212,8 @@ function FrontPage() {
                 <TableCell align="right">{event.startDate}</TableCell>
                 <TableCell align="right">{event.endDate}</TableCell>
                 <TableCell align="right">{event.price} €</TableCell>
-                <TableCell align="right">{event.location.city}</TableCell>
-                <TableCell align="right">{event.category.categoryName}</TableCell>
+                <TableCell align="right">{event.location?.city||'N/A'}</TableCell>
+                <TableCell align="right">{event.category?.categoryName||'N/A'}</TableCell>
                 <TableCell align="right">
                   <Link to={`/event/${event.eventId}`}>
                     <button>View Details</button>
