@@ -132,6 +132,7 @@ function FrontPage() {
               <TableCell align="right">Price</TableCell>
               <TableCell align="right">City</TableCell>
               <TableCell align="right">Category</TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
