@@ -196,7 +196,9 @@ function FrontPage() {
       const filtered = events.filter((event) => {
         const startDate = new Date(event.startDate); // Olettaen että event.startDate on muotoa "yyyy-MM-dd"
         const searchDate = new Date(keyword); // Olettaen että keyword on muotoa "yyyy-MM-dd"
-        return startDate.toISOString().includes(searchDate.toISOString());
+        startDate.setHours(0, 0, 0, 0);
+        searchDate.setHours(0, 0, 0, 0);
+        return startDate.getTime() === searchDate.getTime();  //vertallaan päivämääriä ilman aikaa
       });
       setFilteredEvents(filtered);
     }
