@@ -147,18 +147,46 @@ function FrontPage() {
   };
 
   const searchByCity = (keyword) => {
-    const filtered = events.filter((event) =>
-      event.location?.city?.toLowerCase().includes(keyword.toLowerCase())
-    );
+    const filtered = events.filter((event) =>{
+      //event.location && event.location?.city?.toLowerCase().includes(keyword.toLowerCase())
+      let city;
+      if (event.location.city) {
+        city = event.location.city;
+      } else {
+        city = event.location;
+      }
+
+    return city && city.toLowerCase().includes(keyword.toLowerCase());
+    });
     setFilteredEvents(filtered);
   };
-
+/*
   const searchByCategory = (keyword) => {
     const filtered = events.filter((event) =>
       event.category?.categoryName?.toLowerCase().includes(keyword.toLowerCase())
     );
     setFilteredEvents(filtered);
+  };*/
+  //tämä ei hae tietokannasta ???
+  const searchByCategory = (keyword) => {
+    const filtered = events.filter((event) => {
+      let category;
+  
+      if (event.category) {
+        // H2-tietokannasta
+        category = event.category;
+      }
+      else if (event.keywords && event.keywords.length > 0) {
+        // yksi API keywordeistä
+        category = event.keywords[0].name.fi || event.keywords[1].name.fi;
+      } else if (event.category?.categoryName) {
+        category = category.categoryName;
+      }
+      return category && typeof category === 'string' && category.toLowerCase().includes(keyword.toLowerCase());
+    });
+    setFilteredEvents(filtered);
   };
+  
 
   const searchByDate = (keyword) => {
     if (!keyword) {
