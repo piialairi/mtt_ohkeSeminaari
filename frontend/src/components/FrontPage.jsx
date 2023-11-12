@@ -66,7 +66,7 @@ function FrontPage() {
     fetch("https://api.hel.fi/linkedevents/v1/event/?start=now&end=today") //    fetch("https://api.hel.fi/linkedevents/v1/event/?all_ongoing")
       .then((response) => response.json())
       .then((apiData) => {
-        console.log('Events from HelsinkiAPIdata: ', apiData);
+        console.log('Helsinki apiData: ', apiData);
         if (apiData.data && apiData.data.length > 0) {
           const apiHelsinkiEvents = apiData.data.map((eventData) => {
             const formattedStartDate = formatDateTime(eventData.start_time);
@@ -77,11 +77,11 @@ function FrontPage() {
               endDate: formattedEndDate,
               price: 0+" €",   //offers.is_free(true/false) / price(null/string)
               description: eventData.description.fi, //short_description vai molemmat?
-              location: { city: "Hesa", },  //väliaikainen ratkaisu
-              category: {categoryName: "Ei tietoa"} //väliaikainen ratkaisu
+              location: "Hesa" ,  //väliaikainen ratkaisu
+              category: "",//väliaikainen ratkaisu
           }
           })
-          console.log('Events from HelsinkiAPI: ', apiHelsinkiEvents);
+          //console.log('Events from HelsinkiAPI: ', apiHelsinkiEvents);
           setEvents((prevEvents)=>[...prevEvents, ...apiHelsinkiEvents])
           setFilteredEvents((prevEvents)=>[...prevEvents, ...apiHelsinkiEvents]);
       }
@@ -92,24 +92,35 @@ function FrontPage() {
   }
 
   const fetchEspooEventDataFromApi = () => {
-    fetch("http://api.espoo.fi/events/v1/event/")
+    fetch("http://api.espoo.fi/events/v1/event/?include=location%2Ckeywords&page=2")
       .then((response) => response.json())
       .then((apiData) => {
+        console.log("Espoo apiData: ",apiData);
         if (apiData.data && apiData.data.length > 0) {
           const apiEspooEvents = apiData.data.map((eventData) => {
             const formattedStartDate = formatDateTime(eventData.start_time);
             const formattedEndDate = formatDateTime(eventData.end_time);
+            
+            // Tarkista, onko tapahtuma ilmainen
+            const isFree = eventData.offers && eventData.offers.length > 0 && eventData.offers[0].is_free;
+            // Aseta hinta sen mukaan, onko ilmainen vai ei
+            const eventPrice = isFree ? "Vapaa pääsy" :
+              (eventData.offers && eventData.offers.length > 0 &&
+                eventData.offers[0].price && eventData.offers[0].price.fi)
+                ? eventData.offers[0].price.fi
+                : 'Ei tietoa';
+            
             return {
               eventName: eventData.name.fi,
               startDate: formattedStartDate,
               endDate: formattedEndDate,
-              price: 0 +" €",   //offers.is_free(true/false) / price(null/string)
+              price: eventPrice,
               description: eventData.description.fi, //short_description vai molemmat?
-              location: { city: "Espoo", },  //väliaikainen ratkaisu
-              category: {categoryName: "Ei tietoa"} //väliaikainen ratkaisu
+              location: eventData.location.divisions[0].name.fi,
+              category: eventData.keywords[0].name.fi && eventData.keywords[1].name.fi
           }
           })
-          console.log('Events from EspooAPI: ', apiEspooEvents);
+          //console.log('Events from EspooAPI: ', apiEspooEvents);
           setEvents((prevEvents)=>[...prevEvents, ...apiEspooEvents])
           setFilteredEvents((prevEvents)=>[...prevEvents, ...apiEspooEvents]);
       }
@@ -232,8 +243,8 @@ function FrontPage() {
                 <TableCell align="right">{event.startDate}</TableCell>
                 <TableCell align="right">{event.endDate}</TableCell>
                 <TableCell align="right">{event.price}</TableCell>
-                <TableCell align="right">{event.location?.city||'N/A'}</TableCell>
-                <TableCell align="right">{event.category?.categoryName||'N/A'}</TableCell>
+                <TableCell align="right">{event.location?.city||event.location||'N/A'}</TableCell>
+                <TableCell align="right">{event.category?.categoryName || event.category ||'N/A'}</TableCell>
                 <TableCell align="right">
                   <Link to={`/event/${event.eventId}`}>
                     <button>View Details</button>
