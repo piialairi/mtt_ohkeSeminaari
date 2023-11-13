@@ -15,6 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import UserLocation from "./UserLocation";
+import Button from "@mui/material/Button";
 
 function FrontPage() {
   const [events, setEvents] = useState([]);
@@ -35,14 +36,14 @@ function FrontPage() {
       .then((data) => {
         if (data && data.length > 0) {
           const dbEvents = data.map((event) => ({
-              eventId: event.eventId,
-              eventName: event.eventName,
-              startDate: event.startDate,
-              endDate: event.endDate,
-              price:event.price + " €",
-              description: event.description,
-              location: event.location,
-              category: event.category,
+            eventId: event.eventId,
+            eventName: event.eventName,
+            startDate: event.startDate,
+            endDate: event.endDate,
+            price: event.price + " €",
+            description: event.description,
+            location: event.location,
+            category: event.category,
           }))
           console.log('Events from H2: ', dbEvents);
           setEvents([...dbEvents]);
@@ -76,32 +77,32 @@ function FrontPage() {
               eventName: eventData.name.fi,
               startDate: formattedStartDate,
               endDate: formattedEndDate,
-              price: 0+" €",   //offers.is_free(true/false) / price(null/string)
+              price: 0 + " €",   //offers.is_free(true/false) / price(null/string)
               description: eventData.description.fi, //short_description vai molemmat?
-              location: "Hesa" ,  //väliaikainen ratkaisu
+              location: "Hesa",  //väliaikainen ratkaisu
               category: "",//väliaikainen ratkaisu
-          }
+            }
           })
           //console.log('Events from HelsinkiAPI: ', apiHelsinkiEvents);
-          setEvents((prevEvents)=>[...prevEvents, ...apiHelsinkiEvents])
-          setFilteredEvents((prevEvents)=>[...prevEvents, ...apiHelsinkiEvents]);
-      }
+          setEvents((prevEvents) => [...prevEvents, ...apiHelsinkiEvents])
+          setFilteredEvents((prevEvents) => [...prevEvents, ...apiHelsinkiEvents]);
+        }
       })
       .catch((error) => {
         console.error('Couldnt fetch data: ', error);
-    })
+      })
   }
 
   const fetchEspooEventDataFromApi = () => {
     fetch("http://api.espoo.fi/events/v1/event/?include=location%2Ckeywords&page=2")
       .then((response) => response.json())
       .then((apiData) => {
-        console.log("Espoo apiData: ",apiData);
+        console.log("Espoo apiData: ", apiData);
         if (apiData.data && apiData.data.length > 0) {
           const apiEspooEvents = apiData.data.map((eventData) => {
             const formattedStartDate = formatDateTime(eventData.start_time);
             const formattedEndDate = formatDateTime(eventData.end_time);
-            
+
             // Tarkista, onko tapahtuma ilmainen
             const isFree = eventData.offers && eventData.offers.length > 0 && eventData.offers[0].is_free;
             // Aseta hinta sen mukaan, onko ilmainen vai ei
@@ -110,7 +111,7 @@ function FrontPage() {
                 eventData.offers[0].price && eventData.offers[0].price.fi)
                 ? eventData.offers[0].price.fi
                 : 'Ei tietoa';
-            
+
             return {
               eventName: eventData.name.fi,
               startDate: formattedStartDate,
@@ -119,16 +120,16 @@ function FrontPage() {
               description: eventData.description.fi, //short_description vai molemmat?
               location: eventData.location.divisions[0].name.fi,
               category: eventData.keywords[0].name.fi && eventData.keywords[1].name.fi
-          }
+            }
           })
           //console.log('Events from EspooAPI: ', apiEspooEvents);
-          setEvents((prevEvents)=>[...prevEvents, ...apiEspooEvents])
-          setFilteredEvents((prevEvents)=>[...prevEvents, ...apiEspooEvents]);
-      }
+          setEvents((prevEvents) => [...prevEvents, ...apiEspooEvents])
+          setFilteredEvents((prevEvents) => [...prevEvents, ...apiEspooEvents]);
+        }
       })
       .catch((error) => {
         console.error('Couldnt fetch data: ', error);
-    })
+      })
   }
 
   //tapahtumalistan filtteröinti:
@@ -148,7 +149,7 @@ function FrontPage() {
   };
 
   const searchByCity = (keyword) => {
-    const filtered = events.filter((event) =>{
+    const filtered = events.filter((event) => {
       //event.location && event.location?.city?.toLowerCase().includes(keyword.toLowerCase())
       let city;
       if (event.location.city) {
@@ -157,22 +158,22 @@ function FrontPage() {
         city = event.location;
       }
 
-    return city && city.toLowerCase().includes(keyword.toLowerCase());
+      return city && city.toLowerCase().includes(keyword.toLowerCase());
     });
     setFilteredEvents(filtered);
   };
-/*
-  const searchByCategory = (keyword) => {
-    const filtered = events.filter((event) =>
-      event.category?.categoryName?.toLowerCase().includes(keyword.toLowerCase())
-    );
-    setFilteredEvents(filtered);
-  };*/
+  /*
+    const searchByCategory = (keyword) => {
+      const filtered = events.filter((event) =>
+        event.category?.categoryName?.toLowerCase().includes(keyword.toLowerCase())
+      );
+      setFilteredEvents(filtered);
+    };*/
   //tämä ei hae tietokannasta ???
   const searchByCategory = (keyword) => {
     const filtered = events.filter((event) => {
       let category;
-  
+
       if (event.category) {
         // H2-tietokannasta
         category = event.category;
@@ -187,7 +188,7 @@ function FrontPage() {
     });
     setFilteredEvents(filtered);
   };
-  
+
 
   const searchByDate = (keyword) => {
     if (!keyword) {
@@ -203,8 +204,9 @@ function FrontPage() {
       setFilteredEvents(filtered);
     }
   };
-
-
+  const resetFilters = () => {
+    setFilteredEvents([...events]);
+  };
 
   return (
     <Paper sx={{ width: "100%" }}>
@@ -245,9 +247,17 @@ function FrontPage() {
               onChange={(e) => searchByDate(e.target.value)}
             />
             <Box>
-              <IconButton onClick={handleDrawerClose}>
-                <CloseIcon fontSize="medium" />
-              </IconButton>
+              <IconButton
+                size='small'
+                color='primary'
+                onClick={resetFilters}>Reset Filters </IconButton>
+              <Box>
+                <IconButton
+                  color="warning"
+                  onClick={handleDrawerClose}>
+                  <CloseIcon fontSize="medium" />
+                </IconButton>
+              </Box>
             </Box>
           </Box>
         </Drawer>
@@ -275,8 +285,8 @@ function FrontPage() {
                 <TableCell align="right">{event.startDate}</TableCell>
                 <TableCell align="right">{event.endDate}</TableCell>
                 <TableCell align="right">{event.price}</TableCell>
-                <TableCell align="right">{event.location?.city||event.location||'N/A'}</TableCell>
-                <TableCell align="right">{event.category?.categoryName || event.category ||'N/A'}</TableCell>
+                <TableCell align="right">{event.location?.city || event.location || 'N/A'}</TableCell>
+                <TableCell align="right">{event.category?.categoryName || event.category || 'N/A'}</TableCell>
                 <TableCell align="right">
                   <Link to={`/event/${event.eventId}`}>
                     <button>View Details</button>

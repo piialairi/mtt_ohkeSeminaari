@@ -38,6 +38,7 @@ function EventDetails() {
                 <Typography variant="body1" sx={{ color: 'black' }}>Price: {event.price}€</Typography>
                 <Typography variant="body1" sx={{ color: 'black' }}>Start Date: {event.startDate}</Typography>
                 <Typography variant="body1" sx={{ color: 'black' }}>End Date: {event.endDate}</Typography>
+                <Typography variant="body1" sx={{ color: 'black' }}>Street address: {event.streetAddress}</Typography>
                 {event.location && (
                   <Typography variant="body1" sx={{ color: 'black' }}>Location {event.location.city}</Typography>
                 )}
