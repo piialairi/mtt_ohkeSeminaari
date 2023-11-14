@@ -14,15 +14,8 @@ function EditEvent() {
     description: "",
     price: "",
     streetAddress: "",
-    location: {
-        locationId: 0, 
-        zipcode: "",
-        city: "",
-      },
-      category: {
-        categoryName: "",
-        description: "",
-      },
+    locationId: "",
+    categoryName: ""
   });
 
   const [locations, setLocations] = useState([]);
@@ -42,8 +35,8 @@ function EditEvent() {
           description: eventData.description,
           price: eventData.price,
           streetAddress: eventData.streetAddress,
-          location: eventData.location.locationId, // Assuming you want to set locationId
-          category: eventData.category.categoryName, // Assuming you want to set categoryName
+          locationId: eventData.location.locationId, 
+          categoryName: eventData.category.categoryName, 
         });
 
       })
@@ -156,35 +149,35 @@ function EditEvent() {
 
         <FormControl fullWidth margin="normal">
             <InputLabel>Location</InputLabel>
-            <Select
+            {locations.length > 0 && <Select
                 name="location"
-                defaultValue=''
+                value={event.locationId}
                 onChange={handleInputChange}
             >
                 <MenuItem value="">Select a location</MenuItem>
                 {locations.map((location) => (
-                <MenuItem key={location.locationId} value={location}>
+                <MenuItem key={location.locationId} value={location.locationId}>
                     {location.city} {" "}
                     {location.zipcode}
                 </MenuItem>
                 ))}
-            </Select>
+            </Select>}
             </FormControl>
 
             <FormControl fullWidth margin="normal">
             <InputLabel>Category</InputLabel>
-            <Select
+            {categories.length > 0 && <Select
                 name="category"
-                defaultValue=''
+                value={event.categoryName}
                 onChange={handleInputChange}
             >
                 <MenuItem value="">Select a category</MenuItem>
                 {categories.map((category) => (
-                <MenuItem key={category.categoryName} value={category}>
+                <MenuItem key={category.categoryName} value={category.categoryName}>
                     {category.categoryName}
                 </MenuItem>
                 ))}
-            </Select>
+            </Select>}
         </FormControl>
 
         <Button type="submit" variant="contained" color="primary">
