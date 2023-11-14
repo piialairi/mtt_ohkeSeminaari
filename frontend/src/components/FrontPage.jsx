@@ -69,8 +69,9 @@ function FrontPage() {
       .then((response) => response.json())
       .then((apiData) => {
         console.log('Helsinki apiData: ', apiData);
-        if (apiData.data && apiData.data.length > 0) {
-          const apiHelsinkiEvents = apiData.data.map((eventData) => {
+        const apiHelsinkiEvents = apiData?.data
+          .filter(eventData => eventData.name.fi)
+          .map((eventData) => {
             const formattedStartDate = formatDateTime(eventData.start_time);
             const formattedEndDate = formatDateTime(eventData.end_time);
             return {
@@ -79,14 +80,13 @@ function FrontPage() {
               endDate: formattedEndDate,
               price: 0 + " €",   //offers.is_free(true/false) / price(null/string)
               description: eventData.description.fi, //short_description vai molemmat?
-              location: "Hesa",  //väliaikainen ratkaisu
+              location: "Helsinki",  
               category: "",//väliaikainen ratkaisu
             }
           })
-          //console.log('Events from HelsinkiAPI: ', apiHelsinkiEvents);
-          setEvents((prevEvents) => [...prevEvents, ...apiHelsinkiEvents])
-          setFilteredEvents((prevEvents) => [...prevEvents, ...apiHelsinkiEvents]);
-        }
+
+        setEvents((prevEvents) => [...prevEvents, ...apiHelsinkiEvents])
+        setFilteredEvents((prevEvents) => [...prevEvents, ...apiHelsinkiEvents]);
       })
       .catch((error) => {
         console.error('Couldnt fetch data: ', error);
