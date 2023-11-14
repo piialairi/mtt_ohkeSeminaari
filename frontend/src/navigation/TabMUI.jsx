@@ -12,6 +12,7 @@ function TabMUI() {
   const handleChange = (e, val) => {
     setValue(val);
   }
+  
   return (
     <>
       <AppBar position='sticky' sx={{mt:0, mb:'36px'}}>
