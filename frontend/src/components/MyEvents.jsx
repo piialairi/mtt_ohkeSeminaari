@@ -13,8 +13,7 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from "@mui/material/IconButton";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-//import { deleteEvent } from '../services/EventService';
-import axios from 'axios';
+import { deleteEvent } from '../services/EventService';
 
 function MyEvents() {
     const [events, setEvents] = useState([]);
@@ -33,11 +32,9 @@ function MyEvents() {
     };
 
     const handleDeleteEvent = async (eventId) => {
-        try { 
-            await axios.delete(`http://localhost:8080/events/delete/${eventId}`)
+        try {
+            await deleteEvent(eventId)
             fetchEvents();
-//            await deleteEvent(eventId)
-//            window.location.reload();
         }
         catch(error){console.error(`Couldn't delete event id:${eventId}`);}
     }
@@ -49,7 +46,7 @@ function MyEvents() {
 
                 <Box sx={{ display: 'flex', justifyContent: 'center', padding: 10 }}>
                     <Button          
-                        component={Link} to='/addEvent'
+                        component={Link} to='/addevent'
                         variant='contained'
                         sx={{ marginRight: 3 }}
                     >Create new event</Button>
@@ -64,7 +61,7 @@ function MyEvents() {
                                         <Avatar
                                             sx={{ width: 100, height: 100 }}
                                             alt={event.category.categoryName[0]}
-                                            src="/broken-image.jpg"
+                                            src={event.category.categoryName[0]}
                                         />
                                     </CardContent>
                                     <Divider variant="fullWidth"></Divider>
@@ -79,7 +76,7 @@ function MyEvents() {
                                         <Typography><b>Category:</b> {event.category.categoryName}</Typography>
                                     </CardContent>  
                                     <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-                                        <IconButton component={Link} to={'/edit/' + event.eventId + '/'+event.eventName }><EditIcon /></IconButton>
+                                        <IconButton component={Link} to={'/editevent/' + event.eventId }><EditIcon /></IconButton>
                                         <IconButton onClick={() => handleDeleteEvent(event.eventId)}><DeleteIcon/></IconButton>
                                     </CardActions>
                                 </Card>

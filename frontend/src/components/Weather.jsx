@@ -31,7 +31,8 @@ function Weather() {
   }, []);
 
   const renderWeatherInfo = (weather) => {
-    if (weather) {
+    console.log(weather)
+    if (weather && weather.weather) {
       return (
         <Card sx={{ display: "flex", p:2  }}>
           <CardMedia

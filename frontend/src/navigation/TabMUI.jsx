@@ -23,8 +23,8 @@ function TabMUI() {
           </Box>
           <Box sx={{ flexGrow: 1 }}>
           <Tabs value={value} onChange={handleChange} variant='fullWidth' centered selectionFollowsFocus textColor='inherit' TabIndicatorProps={{ style: { background: 'white' } }}>
-              <Tab label='Etusivu' component={Link} to='/'/>
-              <Tab label='Omat tapahtumat'component={Link} to='myevents'/>
+              <Tab label='Home' component={Link} to='/'/>
+              <Tab label='My events'component={Link} to='myevents'/>
             </Tabs>
             </Box>
           <Box>
