@@ -43,6 +43,10 @@ public class Event {
     @JoinColumn(name = "categoryName")
     private Category category;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "username")
+    private EndUser endUser;
+
     public Event() {
 
     }
@@ -55,6 +59,7 @@ public class Event {
         this.description = description;
         this.price = price;
         this.streetAddress = streetAddress;
+        
     }
 
     public Event(String eventName, LocalDate startDate, LocalDate endDate, String description, double price, String streetAddress, Location location) {
@@ -80,6 +85,21 @@ public class Event {
         this.location = location;
         this.category = category;
     }
+
+        public Event(String eventName, LocalDate startDate, LocalDate endDate, String description, double price, String streetAddress, Location location,
+            Category category, EndUser endUser) {
+        super();
+        this.eventName = eventName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.price = price;
+        this.streetAddress = streetAddress;
+        this.location = location;
+        this.category = category;
+        this.endUser = endUser;
+    }
+
 
     public Long getEventId() {
         return eventId;
@@ -151,6 +171,14 @@ public class Event {
         this.category = category;
     }
 
+    public EndUser getEndUser() {
+        return endUser;
+    }
+
+    public void setEndUser(EndUser endUser) {
+        this.endUser = endUser;
+    }
+
     /*
      * @Override
      * public String toString() {
@@ -168,6 +196,6 @@ public class Event {
     @Override
     public String toString() {
         return "Event [eventId = " + eventId + " eventName = " + eventName + " startDate = " + startDate + " endDate = " + endDate+ " description = "
-                + description + " price = " + price + " streetaddress =" + streetAddress+ " location=" + location + " category = " + category + "]";
+                + description + " price = " + price + " streetaddress =" + streetAddress+ " location=" + location + " category = " + category + " endUser = " + endUser + "]";
     }
 }
