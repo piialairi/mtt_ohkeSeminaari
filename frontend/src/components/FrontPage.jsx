@@ -14,8 +14,6 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import UserLocation from "./UserLocation";
-import Button from "@mui/material/Button";
 
 function FrontPage() {
   const [events, setEvents] = useState([]);
@@ -211,7 +209,7 @@ function FrontPage() {
   return (
     <Paper sx={{ width: "100%" }}>
       <Weather />
-      <UserLocation />
+
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <TextField
           type="text"

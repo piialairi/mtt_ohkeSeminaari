@@ -6,11 +6,14 @@ import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
 
 function Weather() {
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
   const [cityWeather, setCityWeather] = useState(null);
   const [selectedCity, setSelectedCity] = useState("Helsinki");
+
+  
 
   const fetchWeatherData = (city, setWeather) => {
     fetch(
@@ -56,32 +59,63 @@ function Weather() {
     }
   };
 
-  return (
-    <Box sx={{ display:'flex', justifyContent:'center'}}>
-      <Stack backgroundColor="lightgray" p={2} direction="row" spacing={2} m={3}>
-        <Box>
-          {renderWeatherInfo(cityWeather)}
-        </Box>
-        <Stack direction='column' spacing={0}>
-          <TextField
-            label="Another city"
-            margin='normal'
-            variant='filled'
-            value={selectedCity === "Helsinki"?"":selectedCity}
-            onChange={(event) => setSelectedCity(event.target.value)}
-          />
-          <IconButton
-            aria-label="search"
-            size='large'
-            color='primary'
-            onClick={() => fetchWeatherData(selectedCity, setCityWeather)}
-          >
-            <SearchSharpIcon fontSize='inherit' />
-          </IconButton>
-        </Stack>
+  const findMyCity = () => {
+    const success = (position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const geoApiUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${apiKey}`;
+
+      fetch(geoApiUrl)
+        .then((res) => res.json())
+        .then((data) => {
+          const cityName = data[0].name || "city not found";
+          setSelectedCity(cityName);
+          fetchWeatherData(cityName, setCityWeather);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    };
+
+    const error = (error) => {
+      console.error("Error getting geolocation:", error);
+    };
+
+    const watchId = navigator.geolocation.watchPosition(success, error);
+
+    // Clear the watch position after a short delay
+    setTimeout(() => {
+      navigator.geolocation.clearWatch(watchId);
+    }, 1000);
+  };
+
+return (
+  <Box sx={{ display: "flex", justifyContent: "center" }}>
+    <Stack backgroundColor="lightgray" p={2} direction="row" spacing={2} m={3}>
+      <Box>{renderWeatherInfo(cityWeather)}</Box>
+      <Stack direction="column" spacing={0}>
+        <TextField
+          label="Another city"
+          margin="normal"
+          variant="filled"
+          value={selectedCity === "Helsinki" ? "" : selectedCity}
+          onChange={(event) => setSelectedCity(event.target.value)}
+        />
+        <IconButton
+          aria-label="search"
+          size="large"
+          color="primary"
+          onClick={() => fetchWeatherData(selectedCity, setCityWeather)}
+        >
+          <SearchSharpIcon fontSize="inherit" />
+        </IconButton>
+        <Button variant="contained" color="primary" onClick={findMyCity}>
+          Find My City
+        </Button>
       </Stack>
-    </Box>
-  );
+    </Stack>
+  </Box>
+);
 }
 
 export default Weather;
