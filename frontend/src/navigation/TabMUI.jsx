@@ -6,8 +6,8 @@ import AppBar from '@mui/material/AppBar';
 import { Toolbar } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom';
 
-const mttLogo1 = 'src/images/mttLogo1.jpg';
-const mttLogo2 = 'src/images/mttLogo2.jpg';
+const mttLogo1 = 'src/images/mttLogo1.png';
+const mttLogo2 = 'src/images/mttLogo2.png';
 
 
 function TabMUI() {
