@@ -14,6 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteEvent } from '../services/EventService';
+import Swal from 'sweetalert2';
 
 function MyEvents() {
     const [events, setEvents] = useState([]);
@@ -33,11 +34,28 @@ function MyEvents() {
 
     const handleDeleteEvent = async (eventId) => {
         try {
-            await deleteEvent(eventId)
+          // Show a confirmation dialog using sweetalert2
+          const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this event!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+          });
+    
+          // If the user clicks the "Delete" button in the confirmation dialog
+          if (result.isConfirmed) {
+            await deleteEvent(eventId);
             fetchEvents();
+            Swal.fire('Deleted!', 'Your event has been deleted.', 'success');
+          }
+        } catch (error) {
+          console.error(`Couldn't delete event id:${eventId}`);
         }
-        catch(error){console.error(`Couldn't delete event id:${eventId}`);}
-    }
+      };
     
     return (
         <>
