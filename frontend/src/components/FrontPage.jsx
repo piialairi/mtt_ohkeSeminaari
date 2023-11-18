@@ -61,12 +61,37 @@ function FrontPage() {
     });
   };
 
+  const [kategoria, setKategoria] = useState('');
+  
   //tapahtumahaku avoimesta rajapinnasta:
   const fetchHelsinkiEventDataFromApi = () => {
     fetch("https://api.hel.fi/linkedevents/v1/event/?start=now&end=today") //    fetch("https://api.hel.fi/linkedevents/v1/event/?all_ongoing")
       .then((response) => response.json())
       .then((apiData) => {
         console.log('Helsinki apiData: ', apiData);
+        
+        console.log('Category haku: ', apiData.data[0].keywords); //kaikki keywordsit
+        console.log('Category haku: ', apiData.data[0].keywords[1]["@id"]); //linkki
+        const kategoriaLinkki = () => {
+          fetch(`apiData.data[0].keywords[1]["@id"]`)
+            .then((response) => response.json())
+            .then((kategoriaLinkinData) => {
+            console.log('KategoriaLinkinData: ', kategoriaLinkinData.name.fi)
+              setKategoria(kategoriaLinkinData.name.fi)
+            })
+        }
+
+        const kategoriaId = apiData.data.keywords;
+
+        const fetchKategoria = () => {
+          fetch(`https://api.hel.fi/linkedevents/v1/keyword/${kategoriaId}/`)
+            .then((response) => response.json())
+            .then((katdata) =>
+              setKategoria(katdata));
+            //console.log('kategoria vastaus: ', katdata)
+          }
+//        console.log('kategoria ', kategoria);
+        
         const apiHelsinkiEvents = apiData?.data
           .filter(eventData => eventData.name.fi)
           .map((eventData) => {
