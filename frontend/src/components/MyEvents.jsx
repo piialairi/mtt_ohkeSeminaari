@@ -74,10 +74,10 @@ function MyEvents() {
                     {events.map((event, index) => {
                         return (
                             <Grid item key={index}>
-                                <Card sx={{ width: 400, boxShadow: 5}} >            
-                                    <CardContent sx={{ display: 'flex', justifyContent: 'center' }} title={event.startDate}>
+                                <Card sx={{ width: 400, boxShadow: 5,  bgcolor:'secondary.light'}} >            
+                                    <CardContent sx={{ display: 'flex', justifyContent: 'center', bgcolor:'secondary.main' }} title={event.startDate}>
                                         <Avatar
-                                            sx={{ width: 100, height: 100 }}
+                                            sx={{ width: 100, height: 100, bgcolor:'secondary.light', color:'secondary.contrastText' }}
                                             alt={event.category.categoryName[0]}
                                             src={event.category.categoryName[0]}
                                         />
