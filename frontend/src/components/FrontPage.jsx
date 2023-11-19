@@ -106,7 +106,7 @@ function FrontPage() {
                   price: eventPrice,
                   description: descriptionShort,
                   location: locationCity,
-                  category: "",
+                  category: "Helsingin kategoria",
                   }
                 
               })
@@ -210,7 +210,7 @@ function FrontPage() {
 
         if (event.category) {
           // H2-tietokannasta
-          category = event.category;
+          category = event.category//.categoryName; //hakee ainoastaan tietokannasta
         }
         else if (event.keywords && event.keywords.length > 0) {
           // yksi API keywordeistä
