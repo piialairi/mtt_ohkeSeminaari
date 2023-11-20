@@ -83,7 +83,7 @@ function FrontPage() {
                 const locationCity = placeData.address_locality.fi;
                 const locationAddress = placeData.street_address.fi;
                 const locationZipCode = placeData.postal_code;
-                console.log(locationAddress+", "+locationZipCode+", "+locationCity);
+              //  console.log(locationAddress+", "+locationZipCode+", "+locationCity);
               
                 // Tarkista, onko tapahtuma ilmainen
                 const isFree = eventData.offers && eventData.offers.length > 0 && eventData.offers[0].is_free;
@@ -244,7 +244,7 @@ function FrontPage() {
 
     return (
       <Paper sx={{ width: "100%" }}>
-      {/*  <Weather />*/}
+        <Weather />
 
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <TextField
