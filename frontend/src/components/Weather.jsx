@@ -21,8 +21,7 @@ function Weather() {
     )
       .then((response) => response.json())
       .then((data) => {
-        setWeather(data);
-        setSelectedCity("Helsinki")
+        setWeather(data);         
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -98,8 +97,13 @@ return (
           label="Another city"
           margin="normal"
           variant="filled"
-          value={selectedCity === "Helsinki" ? "" : selectedCity}
+          value={selectedCity}
           onChange={(event) => setSelectedCity(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              fetchWeatherData(selectedCity, setCityWeather);
+            }
+          }}
         />
         <IconButton
           aria-label="search"
