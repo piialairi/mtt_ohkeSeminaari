@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -6,7 +6,7 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import { Typography, TextField } from "@mui/material";
+import { Typography, TextField, Button } from "@mui/material";
 import Weather from "./Weather";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -41,6 +41,7 @@ function FrontPage() {
             price: event.price + " €",
             description: event.description,
             location: event.location,
+            streetAddress: event.streetAddress,
             category: event.category,
           }))
           console.log('Events from H2: ', dbEvents);
@@ -100,12 +101,14 @@ function FrontPage() {
                 //console.log(descriptionLong);
 
                 return {
+                  eventId: eventData.id,
                   eventName: eventData.name.fi,
                   startDate: formattedStartDate,
                   endDate: formattedEndDate,
                   price: eventPrice,
                   description: descriptionShort,
                   location: locationCity,
+                  streetAddress: locationAddress,
                   category: "Helsingin kategoria",
                   }
                 
@@ -146,12 +149,14 @@ function FrontPage() {
                   : 'Ei tietoa';
 
               return {
+                eventId: eventData.id,
                 eventName: eventData.name.fi,
                 startDate: formattedStartDate,
                 endDate: formattedEndDate,
                 price: eventPrice,
-                description: eventData.description.fi, //short_description vai molemmat?
+                description: eventData.short_description.fi, //short_description vai molemmat?
                 location: eventData.location.divisions[0].name.fi,
+                streetAddress: eventData.location.street_address.fi,
                 category: eventData.keywords[0].name.fi && eventData.keywords[1].name.fi
               }
             })
@@ -242,7 +247,13 @@ function FrontPage() {
       setFilteredEvents([...events]);
     };
 
-    return (
+  //Tapahtuman lisätietojen näkymä:
+    const [expandedEventId, setExpandedEventId] = useState(null);
+    const handleExpandClick = (eventId) => {
+      setExpandedEventId(eventId === expandedEventId ? null : eventId);
+    };
+
+  return (
       <Paper sx={{ width: "100%" }}>
         <Weather />
 
@@ -304,7 +315,7 @@ function FrontPage() {
                 <TableCell>Event name</TableCell>
                 <TableCell align="right">Starts</TableCell>
                 <TableCell align="right">Ends</TableCell>
-                <TableCell align="right">Price</TableCell>
+                {/*<TableCell align="right">Price</TableCell>*/}
                 <TableCell align="right">City</TableCell>
                 <TableCell align="right">Category</TableCell>
                 <TableCell align="right"></TableCell>
@@ -312,21 +323,31 @@ function FrontPage() {
             </TableHead>
             <TableBody>
               {filteredEvents.map((event, index) => (
+                <React.Fragment key={index}>
+
                 <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell component="th" scope="row">
                     {event.eventName}
                   </TableCell>
                   <TableCell align="right">{event.startDate}</TableCell>
                   <TableCell align="right">{event.endDate}</TableCell>
-                  <TableCell align="right">{event.price}</TableCell>
+                  {/*<TableCell align="right">{event.price}</TableCell>*/}
                   <TableCell align="right">{event.location?.city || event.location || 'N/A'}</TableCell>
                   <TableCell align="right">{event.category?.categoryName || event.category || 'N/A'}</TableCell>
                   <TableCell align="right">
-                    <Link to={`/event/${event.eventId}`}>
-                      <button>View Details</button>
-                    </Link>
+                    <Button onClick={() => handleExpandClick(event.eventId)}>{expandedEventId === event.eventId ? 'Close Details' : 'View Details'}</Button>
                   </TableCell>
-                </TableRow>
+                  </TableRow>
+                  {expandedEventId === event.eventId && (
+                    <TableRow>
+                      <TableCell colSpan={6}>
+                        Price: {event.price}<br/>
+                        Street Address: {event.streetAddress || 'N/A'}<br />
+                        Description: {event.description || 'N/A'}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </React.Fragment>
               ))}
             </TableBody>
           </Table>
