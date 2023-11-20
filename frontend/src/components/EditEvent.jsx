@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { TextField, Select, MenuItem, Button, FormControl, InputLabel } from "@mui/material";
@@ -35,8 +35,8 @@ function EditEvent() {
           description: eventData.description,
           price: eventData.price,
           streetAddress: eventData.streetAddress,
-          locationId: eventData.location.locationId, 
-          categoryName: eventData.category.categoryName, 
+          locationId: eventData.location.locationId,
+          categoryName: eventData.category.categoryName,
         });
 
       })
@@ -46,22 +46,22 @@ function EditEvent() {
       });
 
     // Fetch location and category data for dropdowns
-    axios.get("http://localhost:8080/locations")
-      .then((response) => {
-        setLocations(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching locations: ", error);
-      });
-
-    axios.get("http://localhost:8080/categories")
-      .then((response) => {
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching categories: ", error);
-      });
-  }, [eventId]);
+      axios.get("http://localhost:8080/locations")
+        .then((response) => {
+          setLocations(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching locations: ", error);
+        });
+  
+      axios.get("http://localhost:8080/categories")
+        .then((response) => {
+          setCategories(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching categories: ", error);
+        });
+    }, [eventId]);
 
   
 
@@ -86,12 +86,13 @@ function EditEvent() {
         categoryName: prevEvent.categoryName,
       },
     }));
-  }, [event.locationId, event.categoryName, event.eventName, event.startDatem, event.endDate, event.description]);
+  }, [event.locationId, event.categoryName, event.eventName, event.startDate, event.endDate, event.description, event.location, event.category]);
  
 
   
 
   const handleSubmit = async (e) => {
+    console.log(event)
     e.preventDefault();
 
     try {
@@ -170,36 +171,40 @@ function EditEvent() {
         />
 
         <FormControl fullWidth margin="normal">
-            <InputLabel>Location</InputLabel>
-            {locations.length > 0 && <Select
-                name="locationId"
-                value={event.locationId}
-                onChange={handleInputChange}
-            >
-                <MenuItem value="">Select a location</MenuItem>
-                {locations.map((location) => (
-                <MenuItem key={location.locationId} value={location.locationId}>
-                    {location.city} {" "}
-                    {location.zipcode}
-                </MenuItem>
-                ))}
-            </Select>}
-            </FormControl>
+          <InputLabel>Location</InputLabel>
+          {locations.length > 0 && <Select
+            label="Location"
+            type="text"
+            name="locationId"
+            value={event.locationId}
+            onChange={handleInputChange}
+          >
+            <MenuItem value="">Select a location</MenuItem>
+            {locations.map((location) => (
+              <MenuItem key={location.locationId} value={location.locationId}>
+                {location.city} {" "}
+                {location.zipcode}
+              </MenuItem>
+            ))}
+          </Select>}
+        </FormControl>
 
-            <FormControl fullWidth margin="normal">
-            <InputLabel>Category</InputLabel>
-            {categories.length > 0 && <Select
-                name="categoryName"
-                value={event.categoryName}
-                onChange={handleInputChange}
-            >
-                <MenuItem value="">Select a category</MenuItem>
-                {categories.map((category) => (
-                <MenuItem key={category.categoryName} value={category.categoryName}>
-                    {category.categoryName}
-                </MenuItem>
-                ))}
-            </Select>}
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Category</InputLabel>
+          {categories.length > 0 && <Select
+            label="Category"
+            type="text"
+            name="categoryName"
+            value={event.categoryName}
+            onChange={handleInputChange}
+          >
+            <MenuItem value="">Select a category</MenuItem>
+            {categories.map((category) => (
+              <MenuItem key={category.categoryName} value={category.categoryName}>
+                {category.categoryName}
+              </MenuItem>
+            ))}
+          </Select>}
         </FormControl>
 
         <Button type="submit" variant="contained" color="primary">
