@@ -42,6 +42,7 @@ function EditEvent() {
       })
       .catch((error) => {
         console.error("Error fetching event data: ", error);
+        console.log(event)
       });
 
     // Fetch location and category data for dropdowns
@@ -62,24 +63,45 @@ function EditEvent() {
       });
   }, [eventId]);
 
+  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEvent({
-      ...event,
+    setEvent((prevEvent) => ({
+      ...prevEvent,
       [name]: value,
-    });
+    }));
   };
+  
+  // Use useEffect to handle updates to nested fields
+  useEffect(() => {
+    setEvent((prevEvent) => ({
+      ...prevEvent,
+      location: {
+        ...prevEvent.location,
+        locationId: prevEvent.locationId,
+      },
+      category: {
+        ...prevEvent.category,
+        categoryName: prevEvent.categoryName,
+      },
+    }));
+  }, [event.locationId, event.categoryName, event.eventName, event.startDatem, event.endDate, event.description]);
+ 
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Send a PUT request to update the event data
+      // Send a PUT request to update the event data      
       await axios.put(`http://localhost:8080/events/${eventId}`, event);
       console.log("Event updated successfully");
-      navigate("/myEvents");
+      navigate("/myEvents");      
     } catch (error) {
       console.error("Error updating event:", error);
+      
     }
   };
 
@@ -150,7 +172,7 @@ function EditEvent() {
         <FormControl fullWidth margin="normal">
             <InputLabel>Location</InputLabel>
             {locations.length > 0 && <Select
-                name="location"
+                name="locationId"
                 value={event.locationId}
                 onChange={handleInputChange}
             >
@@ -167,7 +189,7 @@ function EditEvent() {
             <FormControl fullWidth margin="normal">
             <InputLabel>Category</InputLabel>
             {categories.length > 0 && <Select
-                name="category"
+                name="categoryName"
                 value={event.categoryName}
                 onChange={handleInputChange}
             >
