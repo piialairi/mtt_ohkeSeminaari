@@ -65,10 +65,12 @@ public class EventController {
     @PostMapping("/saveEvent")
     public String saveEvent(@Valid @ModelAttribute("newevent") Event event, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult.getFieldErrors().get(0).getDefaultMessage());
             model.addAttribute("locations", locationRepository.findAll());
             model.addAttribute("categories", categoryRepository.findAll());
             return "addevent";
         } else if(event.getEndDate() != null && event.getEndDate().isBefore(event.getStartDate())){
+            System.out.println("date");
             bindingResult.rejectValue("endDate", "endDate", "End date cannot be earlier than a start date");
             model.addAttribute("locations", locationRepository.findAll());
             model.addAttribute("categories", categoryRepository.findAll());
