@@ -1,3 +1,5 @@
+[![CI](https://github.com/Ohjelmistoprojekti2-Black/mtt/actions/workflows/ci.yml/badge.svg)](https://github.com/Ohjelmistoprojekti2-Black/mtt/actions/workflows/ci.yml)
+
 # "Mitä tänään tehtäisiin?"
 
 Tiimi: Lairi Piia, Martinonyte Dovile, Muittari Samuel, Myllymäki Aliisa, Rautiainen Aleksis, Rusi Romeo
