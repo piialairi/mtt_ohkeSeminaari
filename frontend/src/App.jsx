@@ -58,7 +58,7 @@ const mttTheme3 = createTheme({ //https://colorhunt.co/palette/151515301b3f3c415
 export default function App() {
 
   return (
-    <ThemeProvider theme={mttTheme}>
+    <ThemeProvider theme={mttTheme2}>
       <CssBaseline />
       <BrowserRouter>
         <Routes>
