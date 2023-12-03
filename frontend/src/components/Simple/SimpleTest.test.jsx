@@ -8,5 +8,5 @@ import SimpleComponent from './SimpleComponent';
 
 test('renders SimpleComponent', () => {
     render(<SimpleComponent />);
-    expect(screen.getByText('Hello, world!')).toBeInTheDocument();
+    expect(screen.getByText('Hello World!')).toBeInTheDocument();
 });
